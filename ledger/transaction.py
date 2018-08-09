@@ -151,6 +151,38 @@ class transaction:
             }
         return Dict
 
+    def fromDict(self, Dict):
+        try:
+            try : self.TXID = Dict['TXID']
+            try : self.timestamp = Dict['timestamp']
+            try : self.verstion = Dict['verstion']
+            try : self.creatorID = Dict['creatorID']
+            try : self.TXType = Dict['TXType']
+            try : self.timeout = Dict['timeout']
+            try : self.T_hash = Dict['T_hash']
+            try : self.txCount = Dict['txCount']
+
+            try : self.endorsers = Dict['endorsers']
+            try : self.sign = Dict['sign']
+            try : self.produce = Dict['produce']
+
+            try : self.P_name = Dict['P_name']
+            try : self.P_From = Dict['P_From']
+            try : self.P_grade = Dict['P_grade']
+            try : self.P_wight = Dict['P_wight']
+
+            try : self.M_name = Dict['M_name']
+            try : self.M_phone = Dict['M_phone']
+            try : self.M_com = Dict['M_com']
+
+            try : self.N_state = Dict['N_state']
+            try : self.N_else = Dict['N_else']
+        except:
+            return False
+        else:
+            return True
+        return False
+
 if __name__ == "__main__":
     t1 = transaction(이름='딸기', 검증={'IP':'202.31.146.57'}, 타입="입고") # 초기 생성
     t1.setAttribute(전화번호 = "010-1234-5678") # 변경부분, 추가부분 입력

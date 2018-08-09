@@ -5,11 +5,11 @@ sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 from uuid import getnode
 from ledger.transaction import *
 from chaincode.chainToJson import *
-import endorser_1 
-import endorser_2 
+import Stakeholder_1 
+import Stakeholder_2 
 import operator
 
-class endorser:
+class Stakeholder:
     def __init__(self, Object):
         self.Object = Object
         if type(self.Object) == type(transaction()):
@@ -18,19 +18,19 @@ class endorser:
             print(2)
 
     def addSign(self, Object, number, Whether, sign):
-        Information = Endorser()
+        Information = Stakeholder()
         Sign = Information.sign
         Object.produce[number] = {'produce':Whether}
         Object.sign[number] = {'sign':Sign}
         return Object
     
     def Verification(self, Object):
-        Information = Endorser()
+        Information = Stakeholder()
         IP = Information.IP
         Mac = Information.Mac
         data = Information.get_database()
-        for i in range(0, len(Object.endorsers)):
-            if Object.endorsers.get(str(i)) == {'IP':IP, 'Mac':Mac}:
+        for i in range(0, len(Object.Stakeholders)):
+            if Object.Stakeholders.get(str(i)) == {'IP':IP, 'Mac':Mac}:
                 node = Information.get_nodedata(Object.creatorID)
                 if node:
                     SameCount = 0
@@ -56,7 +56,7 @@ class endorser:
 
 
             
-class Endorser:
+class Stakeholder:
     def __init__(self):
         self.IP   = self.get_ipaddress()
         self.Mac  = self.get_macaddress()
@@ -142,8 +142,8 @@ class leader:
         AgreeCount = 0
         OppositionCount = 0
         if type(self.Object) == type(transaction()):
-            Information = Endorser()
-            for i in range(0, len(Object.endorsers)):
+            Information = Stakeholder()
+            for i in range(0, len(Object.Stakeholders)):
                 if self.Object.produce.get(str(i)) == {"produce":"agree"}:
                     AgreeCount += 1
                 elif self.Object.produce.get(str(i)) == {"produce":"Opposition"}:
@@ -162,9 +162,9 @@ if __name__ == "__main__":
     t1.setAttribute(검증={'IP':'202.31.146.48', 'Mac':'0c:54:a5:49:bf:fa'})
     t1.setAttribute(검증={'IP':'202.31.146.58', 'Mac':'50-b7-c3-a2-dd-5b'})
     
-    E  = endorser(t1)
-    E1 = endorser_1.endorser1(t1)
-    E2 = endorser_2.endorser2(t1)
+    E  = Stakeholder(t1)
+    E1 = Stakeholder_1.Stakeholder1(t1)
+    E2 = Stakeholder_2.Stakeholder2(t1)
 
     L = leader(t1)
 

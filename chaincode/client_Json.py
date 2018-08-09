@@ -4,7 +4,7 @@ HOST = 'localhost'
 PORT = 9009
 
 path = os.path.dirname(os.path.abspath(os.path.dirname(__file__))) + "\data_client\\"
- 
+
 def getFileFromServer(filename):
     data_transferred = 0
  

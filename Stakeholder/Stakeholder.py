@@ -4,6 +4,6 @@ sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 from ledger.transaction import *
 from chaincode.chainToJson import *
 
-class endorser:
+class Stakeholder:
     def __init__(self,  *args, **kwargs):
         return

@@ -44,3 +44,15 @@ class blockheader:
             }
         return Dict
 
+    def fromDict(self, Dict):
+        try:
+            self.version = Dict['version']
+            self.blockNumber = Dict['blockNumber']
+            self.timestamp = Dict['timestamp']
+            self.currentBlockHash = Dict['currentBlockHash']
+            self.previousBlockHash = Dict['previousBlockHash']
+        except:
+            return False
+        else:
+            return True
+        return False

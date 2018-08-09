@@ -71,6 +71,25 @@ class block:
         Dict["blockbody"] = txList
         return Dict
 
+    def fromDict(self, Dict):
+        try:
+            try : self.transactionCount = Dict['transactionCount']
+            try : self.blockSize = Dict['blockSize']
+            try : 
+                bh =  blockheader()
+                bh.fromDict(Dict = Dict['blockheader'])
+                self.BH = bh
+            try:
+                for i in Dict['blockbody']:
+                    tx = transaction()
+                    tx.fromDict(Dict = i)
+                    self.BB.append(tx)
+        except:
+            return False
+        else:
+            return True
+        return False
+
         
 if __name__ == "__main__":
     t1 = transaction(이름 = "딸기", 타입 = "보냄")

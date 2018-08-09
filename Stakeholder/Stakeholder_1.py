@@ -6,21 +6,21 @@ from uuid import getnode
 from ledger.transaction import *
 from chaincode.chainToJson import *
 
-class endorser1:
+class Stakeholder1:
     def addSign(self, Object, number, Whether):
-        Information = Endorser()
+        Information = Stakeholder()
         Sign = Information.sign
         Object.produce[number] = {'produce':Whether}
         Object.sign[number] = {'sign':Sign}
         return Object
     
     def Verification(self, Object):
-        Information = Endorser()
+        Information = Stakeholder()
         IP = Information.IP
         Mac = Information.Mac
         data = Information.get_database()
-        for i in range(0, len(Object.endorsers)):
-            if Object.endorsers.get(str(i)) == {'IP':IP, 'Mac':Mac}:
+        for i in range(0, len(Object.Stakeholders)):
+            if Object.Stakeholders.get(str(i)) == {'IP':IP, 'Mac':Mac}:
                 node = Information.get_nodedata(Object.creatorID)
                 if node:
                     SameCount = 0
@@ -47,7 +47,7 @@ class endorser1:
         else:
             print(2)
             
-class Endorser:
+class Stakeholder:
     def __init__(self):
         self.IP   = '202.31.146.57'
         self.Mac  = '0c:54:a5:49:bf:fa'

@@ -51,6 +51,7 @@ class chain:
 
     def set_Hash(self):
         try:
+
             self.C_Hash = hash256(str(self.toDict())).getHash()
         except:
             return False
@@ -68,6 +69,22 @@ class chain:
             chList.append(i.toDict())
         Dict["chains"] = chList
         return Dict
+
+    def fromFict(self, Dict):
+        try:
+            try : self.CHID = Dict['CHID']
+            try : self.C_Hash = Dict['C_Hash']
+            try:
+                for i in Dict['chains']:
+                    Block = block()
+                    Block.fromDict(Dict = i)
+                    self.chains.append(Block)
+
+        except:
+            return False
+        else:
+            return True
+        return False
         
 if __name__ == "__main__":
     t1 = transaction(이름 = "딸기", 타입 = "보냄")

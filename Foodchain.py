@@ -9,8 +9,8 @@ from chaincode.chainToJson import chainToJson
 from chaincode.client_Json import *
 from chaincode.server_Json import *
 
-from endorser.endorser import endorser
-from leader.kvstore import kvstore
+from Stakeholder.Stakeholder import Stakeholder
+from worldstate.kvstore import kvstore
 
 from msp.msp import msp
 from synchronize.synchronize import synchronize
