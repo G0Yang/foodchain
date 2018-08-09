@@ -70,15 +70,20 @@ class chain:
         Dict["chains"] = chList
         return Dict
 
-    def fromFict(self, Dict):
+    def fromDict(self, Dict):
         try:
             try : self.CHID = Dict['CHID']
+            except: print()
+
             try : self.C_Hash = Dict['C_Hash']
+            except: print()
+
             try:
                 for i in Dict['chains']:
                     Block = block()
                     Block.fromDict(Dict = i)
                     self.chains.append(Block)
+            except: print()
 
         except:
             return False

@@ -27,6 +27,9 @@ class chainToJson:
             print("filename is not None and data is None")
             Data = self.loadJson()
             print(type(Data))
+            ch = chain(filename = kwargs['filename'].split('.')[0])
+            ch.fromDict(Data)
+            self.data = ch
 
         elif self.filename is not None and self.data is not None:
             print("filename is not None and data is not None")
@@ -74,24 +77,11 @@ class chainToJson:
 
 
 if __name__ == "__main__":
-    t1 = transaction(이름 = "딸기", 타입 = "보냄")
-    b1 = block(t1)
-    c1 = chain(b1)
-    
-    
-    t2 = transaction(이름 = "딸기", 타입 = "받음")
-    b2 = block(t2)
-    c1.append(b2)
-    
-    
-    t3 = transaction(이름 = "딸기", 타입 = "다시 보냄")
-    t4 = transaction(이름 = "딸기", 타입 = "다시 받음")
-    b3 = block(t3)
-    b3.append(t4)
-    c1.append(b3)
 
+    ctj = chainToJson(filename = "8srkziel366214.json")
+    ctj.data = ctj.loadJson()
 
-    ctj = chainToJson(filename = c1.getCHID() + ".json", data = c1)
+    ch = chain()
+    ch.fromDict(Dict = ctj.data)
 
-    print("----------------------------------------")
-    ctj.append()
+    print(ch.toDict())

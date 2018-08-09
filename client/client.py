@@ -81,9 +81,9 @@ if __name__ == "__main__":
 
     time.sleep(2)
 
-    flag = c2.generateTX(transaction.transaction("A", "B", "Kim", "010-1234-5678", "딸기", "딸기", "A등급", "군산", "15Kg")) # make TX
-    flag = c2.generateTX(transaction.transaction("A", "B", "Kim", "010-1234-5678", "딸기", "딸기", "A등급", "군산", "15Kg")) # make TX
-    flag = c2.generateTX(transaction.transaction("A", "B", "Kim", "010-1234-5678", "딸기", "딸기", "A등급", "군산", "15Kg")) # make TX
+    flag = c2.generateTX(transaction("A", "B", "Kim", "010-1234-5678", "딸기", "딸기", "A등급", "군산", "15Kg")) # make TX
+    flag = c2.generateTX(transaction("A", "B", "Kim", "010-1234-5678", "딸기", "딸기", "A등급", "군산", "15Kg")) # make TX
+    flag = c2.generateTX(transaction("A", "B", "Kim", "010-1234-5678", "딸기", "딸기", "A등급", "군산", "15Kg")) # make TX
     print(flag)
 
     time.sleep(2)

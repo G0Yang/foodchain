@@ -41,16 +41,28 @@ class blockToJson:
         else:
             return True
         return 
-
     
+    def loadJson(self):
+        Data = None
+        try:
+            file = pathlib.Path(self.filename)
+            file_text = file.read_text(encoding='utf-8')
+            Data = json.loads(file_text)
+        except:
+            return False
+        else:
+            return Data
+        return False
 
 
 
 if __name__ == "__main__":
-    t1 = transaction(이름 = "name", 타입 = "gogo")
-    t2 = transaction(이름 = "kimchi", 타입 = "take")
-    b1 = block(t1)
-    #b1.append(t2)
-    tj1 = blockToJson(filename = randFileName(), data = b1)
-    print(tj1.data.toDict())
+    tj1 = blockToJson(filename = "gn8gar3w665670.json")
+    tj1.data = tj1.loadJson()
+
+    b1 = block()
+    print("---------------------------------")
+    b1.fromDict(tj1.data)
+    print("---------------------------------")
+    print(b1.toDict())
 

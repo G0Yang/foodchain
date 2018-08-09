@@ -6,6 +6,8 @@ from hash256.hash256 import *
 class transaction:
     def __init__(self, *args, **kwargs):
 
+        self.flag = {}
+
         # 제안서 부분
         self.TXID = ""
         self.timestamp = time.time()
@@ -84,41 +86,46 @@ class transaction:
             # self.endorsers[str(len(self.endorsers))] = kwargs['검증']
             # self.N_state = kwargs['타입']
             try :   self.N_state = kwargs['타입'] 
-            except: print("타입 error")
+            except: self.flag['타입'] = False
             
             try :   self.M_name = kwargs['생산자'] 
-            except: print("생산자 error")
+            except: self.flag['생산자'] = False
 
             try :   self.M_phone = kwargs['전화번호'] 
-            except: print("전화번호 error")
+            except: self.flag['전화번호'] = False
 
             try :   self.endorsers[str(len(self.endorsers))] = kwargs['검증'] 
-            except: print("검증 error")
+            except: self.flag['검증'] = False
             
             try :   self.P_name = kwargs['이름'] 
-            except: print("이름 error")
+            except: self.flag['이름'] = False
 
             try :   self.P_From = kwargs['산지'] 
-            except: print("산지 error")
+            except: self.flag['산지'] = False
 
             try :   self.P_grade = kwargs['등급'] 
-            except: print("등급 error")
+            except: self.flag['등급'] = False
 
             try :   self.P_wight = kwargs['무게'] 
-            except: print("무게 error")
+            except: self.flag['무게'] = False
 
             try :   self.sign[str(len(self.sign))] = kwargs['사인'] 
-            except: print("사인 error")
+            except: self.flag['사인'] = False
             
             try :   self.creatorID = kwargs['서명']
-            except: print("서명 error")
+            except: self.flag['서명'] = False
             
             self.T_hash = hash256(str(self.toDict())).getHash()
 
         except:
             print("error")
         else:
+            if False in self.flag:
+                for i in self.flag:
+                    print(i, "is error")
             return True
+
+
 
         return False
 
@@ -152,31 +159,54 @@ class transaction:
         return Dict
 
     def fromDict(self, Dict):
+        if type(Dict) is not type(dict()):
+            print("false")
+            return False
         try:
             try : self.TXID = Dict['TXID']
+            except: print()
             try : self.timestamp = Dict['timestamp']
+            except: print()
             try : self.verstion = Dict['verstion']
+            except: print()
             try : self.creatorID = Dict['creatorID']
+            except: print()
             try : self.TXType = Dict['TXType']
+            except: print()
             try : self.timeout = Dict['timeout']
+            except: print()
             try : self.T_hash = Dict['T_hash']
+            except: print()
             try : self.txCount = Dict['txCount']
+            except: print()
 
             try : self.endorsers = Dict['endorsers']
+            except: print()
             try : self.sign = Dict['sign']
+            except: print()
             try : self.produce = Dict['produce']
+            except: print()
 
             try : self.P_name = Dict['P_name']
+            except: print()
             try : self.P_From = Dict['P_From']
+            except: print()
             try : self.P_grade = Dict['P_grade']
+            except: print()
             try : self.P_wight = Dict['P_wight']
+            except: print()
 
             try : self.M_name = Dict['M_name']
+            except: print()
             try : self.M_phone = Dict['M_phone']
+            except: print()
             try : self.M_com = Dict['M_com']
+            except: print()
 
             try : self.N_state = Dict['N_state']
+            except: print()
             try : self.N_else = Dict['N_else']
+            except: print()
         except:
             return False
         else:

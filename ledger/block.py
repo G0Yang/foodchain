@@ -1,14 +1,14 @@
 import time, sys, os
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 
-#from ledger.transaction import transaction
+from ledger.transaction import transaction
 from ledger.blockheader import *
 from hash256.hash256 import *
 
 class block:
     def __init__(self, *args, **kwargs):
         self.transactionCount = 0
-        self.blockSize = 0
+        self.blocksize = 0
         self.BH = blockheader()
         self.BB = []
         try: 
@@ -19,7 +19,7 @@ class block:
                 self.transactionCount = self.transactionCount + 1
                 self.BB[0].txCount = self.transactionCount
                 sizeof = str(self.toDict())
-                self.blockSize = len(sizeof)
+                self.blocksize = len(sizeof)
         except:
             print("init Error")
         return
@@ -32,7 +32,7 @@ class block:
                 self.transactionCount = self.transactionCount + 1
                 self.BB[-1].txCount = self.transactionCount
 
-                self.blockSize = len(str(self.toDict()))
+                self.blocksize = len(str(self.toDict()))
                 self.BH.setCurrentHash(hash256(str(self.toDict())).getHash())
             else:
                 return False
@@ -62,7 +62,7 @@ class block:
     def toDict(self):
         Dict = {
             'transactionCount' : self.transactionCount,
-            'blocksize' : self.blockSize,
+            'blocksize' : self.blocksize,
             'blockheader' : self.BH.toDict()
             }
         txList = []
@@ -74,16 +74,24 @@ class block:
     def fromDict(self, Dict):
         try:
             try : self.transactionCount = Dict['transactionCount']
-            try : self.blockSize = Dict['blockSize']
+            except: print("transactionCount error")
+
+            try : self.blocksize = Dict['blocksize']
+            except: print("blocksize error")
+
             try : 
                 bh =  blockheader()
                 bh.fromDict(Dict = Dict['blockheader'])
                 self.BH = bh
+            except: print("blockheader error")
+
             try:
                 for i in Dict['blockbody']:
                     tx = transaction()
                     tx.fromDict(Dict = i)
                     self.BB.append(tx)
+            except: print("blockbody error")
+
         except:
             return False
         else:

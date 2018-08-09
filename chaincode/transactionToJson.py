@@ -39,12 +39,27 @@ class transactionToJson:
             return True
         return 
 
-    
+    def loadJson(self):
+        Data = None
+        try:
+            file = pathlib.Path(self.filename)
+            file_text = file.read_text(encoding='utf-8')
+            Data = json.loads(file_text)
+        except:
+            return False
+        else:
+            return Data
+        return False
 
 
 
 if __name__ == "__main__":
-    t1 = transaction(이름 = "kim")
-    tj1 = transactionToJson(filename = randFileName(), data = t1)
-    print(tj1.data.toDict())
+    tj1 = transactionToJson(filename = "52qp2i55919387.json")
+    tj1.data = tj1.loadJson()
+
+    t2 = transaction()
+    print(type(tj1.data))
+    t2.fromDict(Dict = tj1.data)
+
+    print(t2.toDict())
 

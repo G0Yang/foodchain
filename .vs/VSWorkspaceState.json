@@ -1,0 +1,15 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\chaincode",
+    "\\client",
+    "\\data_server",
+    "\\hash256",
+    "\\ledger",
+    "\\Stakeholder",
+    "\\synchronize",
+    "\\worldstate"
+  ],
+  "SelectedNode": "\\Stakeholder\\Stakeholder_1.py",
+  "PreviewInSolutionExplorer": false
+}
