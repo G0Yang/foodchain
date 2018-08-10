@@ -4,12 +4,13 @@
     "\\chaincode",
     "\\client",
     "\\data_server",
+    "\\flagdb",
     "\\hash256",
     "\\ledger",
+    "\\msp",
     "\\Stakeholder",
-    "\\synchronize",
-    "\\worldstate"
+    "\\synchronize"
   ],
-  "SelectedNode": "\\redeme.txt",
+  "SelectedNode": "\\Stakeholder\\Stakeholder_0.py",
   "PreviewInSolutionExplorer": false
 }
