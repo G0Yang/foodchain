@@ -1,6 +1,7 @@
 import time, sys, os
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 
+import metadata
 from hash256.hash256 import *
 
 class transaction:
@@ -11,7 +12,7 @@ class transaction:
         # 제안서 부분
         self.TXID = ""
         self.timestamp = time.time()
-        self.verstion = 0.2
+        self.verstion = metadata.BaseVersion
         self.creatorID = {} # 트랜잭션 생성자 서명
         self.TXType = "" # 트랜잭션 분류
         self.timeout = 0

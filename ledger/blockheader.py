@@ -1,8 +1,9 @@
-import time
+sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
+import time, metadata
 
 class blockheader:
     def __init__(self):
-        self.version = 0.1
+        self.version = metadata.BaseVersion
         self.blockNumber = None
         self.timestamp = time.time()
         self.currentBlockHash = ""
