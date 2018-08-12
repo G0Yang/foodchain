@@ -49,4 +49,5 @@ B팀은 분산원장, 분산합의, 트랜잭션
     - synchronize.py            # 기존 원장 무결성 채크
   - Foodchain.py                # 종합 예제
   - metadata.py                 # 이 프로그램의 metadata
-  - readme.txt                  # 
+  - readme.txt                  # 패치노트
+  
