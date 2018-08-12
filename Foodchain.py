@@ -10,7 +10,7 @@ from chaincode.client_Json import *
 from chaincode.server_Json import *
 
 from Stakeholder.Stakeholder import Stakeholder
-from worldstate.kvstore import kvstore
+#from flagdb.kvstore import kvstore
 
 from msp.msp import msp
 from synchronize.synchronize import synchronize

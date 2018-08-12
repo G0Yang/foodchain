@@ -2,7 +2,6 @@ import sys, os, json, pathlib
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 
 from ledger import transaction
-from endorser import endorser
 from chaincode import transactionToJson
 
 

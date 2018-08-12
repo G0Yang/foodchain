@@ -1,4 +1,4 @@
-import couchdb
+#import couchdb
 
 class kvstore:
     def __init__(self, *args, **kwargs):
