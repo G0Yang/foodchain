@@ -17,7 +17,7 @@ class transactionToJson:
         if self.filename == None:
             return
         else:
-            try : self.filename = path + "tx_" + self.filename
+            try : self.filename = path + self.filename
             except: print("filename error")
 
             try : self.data = kwargs['data']
@@ -54,7 +54,7 @@ class transactionToJson:
 
 
 if __name__ == "__main__":
-    tj1 = transactionToJson(filename = "52qp2i55919387.json")
+    tj1 = transactionToJson(filename = "test.json")
     tj1.data = tj1.loadJson()
 
     t2 = transaction()

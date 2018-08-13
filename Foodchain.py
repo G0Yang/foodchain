@@ -114,7 +114,7 @@ def appendBlockInChain(Block, Chain, ctj):
     except: print("save error!!!")
     return True
 
-# 12 worldstate 다루기 - 아파치 couchDB
+# 12 worldstate 다루기 - 아파치 couchDB (보류)
 def worldstate(Chain):
     while True:
         print("1. login")
@@ -160,6 +160,39 @@ def socket_client():
     PORT = int(input('PORT : '))
     filename = str(input('다운로드 받은 파일이름을 입력하세요:'))
     getFileFromServer(Host = HOST, Port  = PORT, filename = filename)
+    
+    flag = input('T = 트랜잭션, B = 블록, C = 체인 : ')
+    
+    if flag == "c" or flag == "C":
+        try : 
+            ctj = chainToJson(filename = filename)
+            ctj.data = ctj.loadJson()
+            Chain = chain()
+            Chain.fromDict(Dict = ctj.data)
+            print(Chain.toDict())
+        except:
+            print("file is not exist")
+
+    elif flag == "b" or flag == "B":
+        try : 
+            btj = blockToJson(filename = filename)
+            btj.data = btj.loadJson()
+            Block = block()
+            Block.fromDict(Dict = btj.data)
+            print(Block.toDict())
+        except:
+            print("file is not exist")
+
+    elif flag == "t" or flag == "T":
+        try : 
+            ttj = transactionToJson(filename = filename)
+            ttj.data = ttj.loadJson()
+            Transaction = transaction()
+            Transaction.fromDict(Dict = ttj.data)
+            print(Transaction.toDict())
+        except:
+            print("file is not exist")
+
     return False
 
 # 15 socket-server 다루기

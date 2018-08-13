@@ -11,7 +11,7 @@ class MyTcpHandler(socketserver.BaseRequestHandler):
         data_transferred = 0
         print('[%s] 연결됨' %self.client_address[0])
         filename = self.request.recv(1024) # 클라이언트로 부터 파일이름을 전달받음
-        filename = filename.decode() # 파일이름 이진 바이트 스트림 데이터를 일반 문자열로 변환
+        filename = filename.decode('utf-8') # 파일이름 이진 바이트 스트림 데이터를 일반 문자열로 변환
  
         filename = path_server + filename
 

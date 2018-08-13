@@ -10,7 +10,7 @@ def getFileFromServer(Host = HOST, Port  = PORT, filename = ""):
     print(Host, Port, filename)
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
         sock.connect((Host,Port))
-        sock.sendall(filename.encode())
+        sock.sendall(filename.encode('utf-8'))
  
         data = sock.recv(1024)
         if not data:
@@ -33,4 +33,3 @@ if __name__ == '__main__':
     PORT = int(input('PORT : '))
     filename = input('다운로드 받은 파일이름을 입력하세요:')
     getFileFromServer(Host = HOST, Port  = PORT, filename = filename)
-

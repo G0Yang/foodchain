@@ -9,8 +9,8 @@
     "\\hash256",
     "\\ledger",
     "\\msp",
-    "\\Stakeholder"
+    "\\synchronize"
   ],
-  "SelectedNode": "\\Foodchain.py",
+  "SelectedNode": "\\synchronize\\synchronize.py",
   "PreviewInSolutionExplorer": false
 }
