@@ -3,13 +3,13 @@ import socket, os, pathlib, sys
 HOST = 'localhost'
 PORT = 9009
 
-path = os.path.dirname(os.path.abspath(os.path.dirname(__file__))) + "\data_client\\"
+path_client = os.path.dirname(os.path.abspath(os.path.dirname(__file__))) + "\data_client\\"
 
-def getFileFromServer(filename):
+def getFileFromServer(Host = HOST, Port  = PORT, filename = ""):
     data_transferred = 0
- 
+    print(Host, Port, filename)
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-        sock.connect((HOST,PORT))
+        sock.connect((Host,Port))
         sock.sendall(filename.encode())
  
         data = sock.recv(1024)
@@ -17,7 +17,7 @@ def getFileFromServer(filename):
             print('파일[%s]: 서버에 존재하지 않거나 전송중 오류발생' %filename)
             return
  
-        with open(path + filename, 'wb') as f:
+        with open(path_client + filename, 'wb') as f:
             try:
                 while  data:
                     f.write(data)
@@ -29,6 +29,8 @@ def getFileFromServer(filename):
     print('파일[%s] 전송종료. 전송량 [%d]' %(filename, data_transferred))
 
 if __name__ == '__main__':  
+    HOST = input('HOST : ')
+    PORT = int(input('PORT : '))
     filename = input('다운로드 받은 파일이름을 입력하세요:')
-    getFileFromServer(filename)
+    getFileFromServer(Host = HOST, Port  = PORT, filename = filename)
 

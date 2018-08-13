@@ -88,18 +88,6 @@ def sendChain(Chain):
     ctj.saveJson()
     return ctj
 
-# 9 기존 체인에 블록 추가
-def appendBlockInChain(Block, Chain, ctj):
-    if type(Chain) != type(chain()) or type(Block) != type(block()):
-        return False
-    print("append Block In Chain")
-    try: ctj.appendBlock(Block.toDict())
-    except: print("append error!!!")
-
-    try: ctj.saveJson()
-    except: print("save error!!!")
-    return True
-
 # 7 파일 리스트 보여주기
 def showFileList():
     path = os.path.dirname(__file__) + "\\" + str(input('dir : ')) + "\\"
@@ -114,30 +102,20 @@ def showFileList():
 
     print()
 
-# 20 json 파일을 브로드케스팅으로 보내기(x)
-def sendJsonBroadcasting():
-    cs = socket(AF_INET, SOCK_DGRAM)
-    cs.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
-    cs.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
+# 9 기존 체인에 블록 추가
+def appendBlockInChain(Block, Chain, ctj):
+    if type(Chain) != type(chain()) or type(Block) != type(block()):
+        return False
+    print("append Block In Chain")
+    try: ctj.appendBlock(Block.toDict())
+    except: print("append error!!!")
 
-    path = os.path.dirname(__file__) + "\data_server\\"
-
-    file = pathlib.Path(path + 'tx.json')
-    file_text = file.read_text(encoding='utf-8')
-
-    #cs.sendto(file_text.encode(), ('255.255.255.255', 9009))
-
-    return False
-
-# 21 json 파일을 브로드케스팅으로 받기(x)
-def takeJsonBroadcasting():
-    s1 = server_Json()
-    s1.runServer()
-    return False
+    try: ctj.saveJson()
+    except: print("save error!!!")
+    return True
 
 # 12 worldstate 다루기 - 아파치 couchDB
 def worldstate(Chain):
-
     while True:
         print("1. login")
         print("2. show databasas")
@@ -145,7 +123,7 @@ def worldstate(Chain):
         print("4. insert data in database")
         print("5. make database")
         print("6. select database")
-        print("")
+        print("0. exit")
 
         num = input('num : ')
         W = kvstore()
@@ -170,6 +148,50 @@ def worldstate(Chain):
 
         elif num == 6:
             W,connectDB(DBname = input('DBname : '))
+
+        elif num == 0:
+            break
+
+    return False
+
+# 14 socket-client 다루기
+def socket_client():
+    HOST = str(input('HOST : '))
+    PORT = int(input('PORT : '))
+    filename = str(input('다운로드 받은 파일이름을 입력하세요:'))
+    getFileFromServer(Host = HOST, Port  = PORT, filename = filename)
+    return False
+
+# 15 socket-server 다루기
+def socket_server():
+    try :
+        HOST = str(input('HOST : '))
+        PORT =  int(input('PORT : '))
+        runServer(Host = HOST, Port  = PORT)
+    except:
+        print()
+    return False
+
+# 20 json 파일을 브로드케스팅으로 보내기(x)
+def sendJsonBroadcasting():
+    cs = socket(AF_INET, SOCK_DGRAM)
+    cs.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
+    cs.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
+
+    path = os.path.dirname(__file__) + "\data_server\\"
+
+    file = pathlib.Path(path + 'tx.json')
+    file_text = file.read_text(encoding='utf-8')
+
+    #cs.sendto(file_text.encode(), ('255.255.255.255', 9009))
+
+    return False
+
+# 21 json 파일을 브로드케스팅으로 받기(x)
+def takeJsonBroadcasting():
+    s1 = server_Json()
+    s1.runServer()
+    return False
 
 if __name__ == "__main__":
     tx = ""
@@ -201,6 +223,9 @@ if __name__ == "__main__":
         print("11. get ledger")
         print("12. worldstate")
         print("13. show transaction, block, chain")
+
+        print("14. client-server")
+        print("15. socket-server")
 
         
         print("20. send json to Broacast-socket")
@@ -275,6 +300,12 @@ if __name__ == "__main__":
 
             try: print(ctj.data)
             except:print("ctj error")
+            
+        elif num == 14:
+            socket_client()
+
+        elif num == 15:
+            socket_server()
 
         elif num == 20:
             sendJsonBroadcasting()

@@ -3,14 +3,14 @@
     "",
     "\\chaincode",
     "\\client",
+    "\\data_client",
     "\\data_server",
     "\\flagdb",
     "\\hash256",
     "\\ledger",
     "\\msp",
-    "\\Stakeholder",
-    "\\synchronize"
+    "\\Stakeholder"
   ],
-  "SelectedNode": "\\synchronize\\synchronize.py",
+  "SelectedNode": "\\Foodchain.py",
   "PreviewInSolutionExplorer": false
 }
