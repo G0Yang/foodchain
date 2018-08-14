@@ -76,12 +76,16 @@ class chainToJson:
         return False
 
 
-if __name__ == "__main__":
 
-    ctj = chainToJson(filename = "8srkziel366214.json")
+if __name__ == "__main__":
+    for _ in range(0,10):
+        print(randFileName())
+    '''
+    ctj = chainToJson(filename = randFileName())
     ctj.data = ctj.loadJson()
 
     ch = chain()
     ch.fromDict(Dict = ctj.data)
 
     print(ch.toDict())
+    '''

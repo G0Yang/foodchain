@@ -45,11 +45,11 @@ class kvstore:
 
     def insertDB(self, data): # data is Dictionary
         try :
-            self.db.save(data)
+            doc_id, doc_rev = self.db.save(data)
         except:
             print("DB is not initialized")
         else:
-            return True
+            return [doc_id, doc_rev]
         return False
 
     def showDatabases(self):

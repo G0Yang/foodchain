@@ -13,6 +13,9 @@ class chain:
         self.C_Hash = None
         print(len(self.chains))
 
+        self.FlagID = None
+        self.FlagREV = None
+
         try : self.CHID = kwargs['CHID']
         except : print("CHID error")
         try : self.chains = kwargs['chains']
