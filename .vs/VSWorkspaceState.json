@@ -9,8 +9,8 @@
     "\\hash256",
     "\\ledger",
     "\\msp",
-    "\\synchronize"
+    "\\Stakeholder"
   ],
-  "SelectedNode": "\\synchronize\\synchronize.py",
+  "SelectedNode": "\\flagdb\\kvstore.py",
   "PreviewInSolutionExplorer": false
 }

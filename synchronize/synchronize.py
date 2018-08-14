@@ -20,7 +20,6 @@ sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 
 from flagdb.kvstore import kvstore
 
-
 class synchronize:
     def __init__(self, *args, **kwargs):
         self.flag = []

@@ -10,7 +10,7 @@ from chaincode.client_Json import *
 from chaincode.server_Json import *
 
 from Stakeholder.Stakeholder import Stakeholder
-#from flagdb.kvstore import kvstore
+from flagdb.kvstore import *
 
 from msp.msp import msp
 from synchronize.synchronize import synchronize
@@ -116,6 +116,7 @@ def appendBlockInChain(Block, Chain, ctj):
 
 # 12 worldstate 다루기 - 아파치 couchDB (보류)
 def worldstate(Chain):
+    W = kvstore()
     while True:
         print("1. login")
         print("2. show databasas")
@@ -125,8 +126,8 @@ def worldstate(Chain):
         print("6. select database")
         print("0. exit")
 
-        num = input('num : ')
-        W = kvstore()
+        num = int(input('num : '))
+
         if num == 1:
             W.login(user = 'admin', password = 'food1234', IP = '202.31.146.57')
 
@@ -147,7 +148,7 @@ def worldstate(Chain):
             W.makeDB(DBname = input('DBname : '))
 
         elif num == 6:
-            W,connectDB(DBname = input('DBname : '))
+            W.connectDB(DBname = input('DBname : '))
 
         elif num == 0:
             break
@@ -236,6 +237,8 @@ if __name__ == "__main__":
     ctj = ""
 
     while True:
+        print("")
+        print("-------------- 종합 예제 --------------")
         print("1. make transaction")
         print("2. send transaction")
 
@@ -266,7 +269,8 @@ if __name__ == "__main__":
 
         print("0. exit")
 
-        num = int(input('input : '))
+        try : num = int(input('input : '))
+        except : num = None
 
         if num == 1:
             tx = makeTransaction()
@@ -309,8 +313,15 @@ if __name__ == "__main__":
 
         elif num == 11:
             # 11 기존 원장 불러오기
-            try : ctj = chainToJson(filename = str(input('filename : ')))
+            try :
+                ctj = chainToJson(filename = str(input('filename : ')))
+                ctj.data = ctj.loadJson()
             except : print("file is not exist")
+            try : 
+                Chain = chain()
+                Chain.fromDict(Dict = ctj.data)
+            except:
+                print("set fromFict() error")
 
         elif num == 12:
             worldstate(Chain)

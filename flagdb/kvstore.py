@@ -1,4 +1,4 @@
-#import couchdb
+import couchdb
 
 class kvstore:
     def __init__(self, *args, **kwargs):
@@ -16,11 +16,12 @@ class kvstore:
         try :
             user = kwargs['user'] # admin
             password = kwargs['password'] # food1234
-            self.server = couchdb.Server("http://%s:%s@"+ kwargs['IP'] +":5984/" % (user, password))
+            self.server = couchdb.Server("http://%s:%s@" % (user, password) + kwargs['IP'] +":5984/")
         except:
             print("login false!!")
             return False
         else:
+            print("login succeces!!")
             return True
         return False
 
@@ -44,20 +45,16 @@ class kvstore:
 
     def insertDB(self, data): # data is Dictionary
         try :
-            # self.db = self.connectDB("foodchain")
-            self.db = self.connectDB(str(input('database name : ')))
-            if self.db == False:
-                return False
-            else:
-                db.save(data)
-                return True
+            self.db.save(data)
         except:
             print("DB is not initialized")
+        else:
+            return True
         return False
 
     def showDatabases(self):
         try:
-            for i in server:
+            for i in self.server:
                 print(i)
         except:
             print("server is not initialized")
@@ -66,14 +63,25 @@ class kvstore:
     def showData(self):
         try :
             for i in self.db:
-                print(db.get(i))
+                print(self.db.get(i))
         except:
             return False
         else:
             return True
         return False
 
-    
+
+'''
+k = kvstore()
+k.login(user = 'admin', password = 'food1234', IP = '202.31.146.57')
+#k.showDatabases()
+k.db = k.connectDB(DBname="foodchain")
+print(k.db)
+print("show :", k.showData())
+print("insert : ", k.insertDB(data = {'name' : 'kim'}))
+print("show :", k.showData())
+'''
+
 
 ''' # 테스트 예제
 import couchdb
