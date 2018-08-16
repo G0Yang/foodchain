@@ -8,8 +8,9 @@ from chaincode.blockToJson import blockToJson
 from chaincode.chainToJson import chainToJson
 from chaincode.client_Json import *
 from chaincode.server_Json import *
+from chaincode.randFileName import *
 
-from Stakeholder.Stakeholder import Stakeholder
+from Stakeholder.Stakeholder import *
 from flagdb.kvstore import *
 
 from msp.msp import msp
@@ -47,7 +48,7 @@ def sendTransaction(tx):
     if type(tx) != type(transaction()):
         return False
     print("send transaction")
-    ttj = transactionToJson(filename = str(input('filename : ')), data = tx)
+    ttj = transactionToJson(filename = "tx_" + randFileName(), data = tx)
     return ttj
 
 # 3 블록 만들기
@@ -65,7 +66,7 @@ def sendBlock(Block):
     if type(Block) != type(block()):
         return False
     print("send block")
-    btj = blockToJson(filename = str(input('filename : ')), data = Block)
+    btj = blockToJson(filename = "block_" + randFileName(), data = Block)
     return btj
 
 # 5 체인 만들기
@@ -83,7 +84,7 @@ def sendChain(Chain):
     if type(Chain) != type(chain()):
         return False
     print("send chain")
-    ctj = chainToJson(filename = str(input('filename : ')), data = Block)
+    ctj = chainToJson(filename = "ch_" + randFileName(), data = Block)
     ctj.appendBlock(Chain.toDict())
     ctj.saveJson()
     return ctj
@@ -314,7 +315,7 @@ if __name__ == "__main__":
         elif num == 11:
             # 11 기존 원장 불러오기
             try :
-                ctj = chainToJson(filename = str(input('filename : ')))
+                ctj = chainToJson(filename = str("ch_" + input('filename : ')))
                 ctj.data = ctj.loadJson()
             except : print("file is not exist")
             try : 

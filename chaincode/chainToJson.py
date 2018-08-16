@@ -13,14 +13,14 @@ class chainToJson:
         try:
             try : self.data = kwargs['data']
             except: print("data error")
-            try : self.filename = path + "ch_" + kwargs['filename']
+            try : self.filename = path + kwargs['filename']
             except: print("filename error")
         except:
             return
 
         if self.filename is None and self.data is not None:
             print("filename is None and data is not None")
-            self.filename = path + "ch_" + randFileName()
+            self.filename = path + randFileName()
             self.saveJson()
 
         elif self.filename is not None and self.data is None:

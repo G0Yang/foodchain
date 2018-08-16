@@ -3,35 +3,28 @@ import os
 import socket
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 from uuid import getnode
-from ledger.transaction import *
+from ledger.transaction_Strawberry import *
 from chaincode.chainToJson import *
-import Stakeholder_1 
-import Stakeholder_2 
-import operator
+import stakeholder_1 
+import stakeholder_2 
 
-class Stakeholder:
-    def __init__(self, Object):
-        self.Object = Object
-        if type(self.Object) == type(transaction()):
-            self.Verification(self.Object)
-        else:
-            print(2)
-
+class endorser:
     def addSign(self, Object, number, Whether, sign):
-        Information = Stakeholder()
+        Information = Endorser()
         Sign = Information.sign
         Object.produce[number] = {'produce':Whether}
         Object.sign[number] = {'sign':Sign}
         return Object
     
     def Verification(self, Object):
-        Information = Stakeholder()
+        Information = Endorser()
         IP = Information.IP
         Mac = Information.Mac
         data = Information.get_database()
-        for i in range(0, len(Object.Stakeholders)):
-            if Object.Stakeholders.get(str(i)) == {'IP':IP, 'Mac':Mac}:
+        for i in range(0, len(Object.endorsers)):
+            if Object.endorsers.get(str(i)) == {'IP':IP, 'Mac':Mac}:
                 node = Information.get_nodedata(Object.creatorID)
+                
                 if node:
                     SameCount = 0
                     InconsistencyCount = 0
@@ -42,21 +35,26 @@ class Stakeholder:
                             SameCount += 1
                         else :
                             InconsistencyCount += 1
-                
                     if (SameCount / (SameCount + InconsistencyCount)) * 100 > 50:
                         self.Object = self.addSign(self.Object, str(i), "agree", Object.creatorID)
-                        #print("퍼센트가 " + ((SameCount + InconsistencyCount) / SameCount) * 100 + "이므로 블록생성 찬성")
+                        print("퍼센트가 " + str((SameCount / (SameCount + InconsistencyCount)) * 100) + "이므로 블록생성 찬성")
                         return self.Object
                     elif (SameCount / (SameCount + InconsistencyCount)) * 100 < 51:
                         self.Object = self.addSign(self.Object, str(i), "Opposition", Object.creatorID)
-                        #print("퍼센트가 " + str((SameCount / (SameCount + InconsistencyCount)) * 100) + "이므로 블록생성 반대")
+                        print("퍼센트가 " + str((SameCount / (SameCount + InconsistencyCount)) * 100) + "이므로 블록생성 반대")
                         return self.Object
     
 
 
 
+    def __init__(self, Object):
+        self.Object = Object
+        if type(self.Object) == type(transaction()):
+            self.Verification(self.Object)
+        else:
+            print(2)
             
-class Stakeholder:
+class Endorser:
     def __init__(self):
         self.IP   = self.get_ipaddress()
         self.Mac  = self.get_macaddress()
@@ -78,21 +76,26 @@ class Stakeholder:
 
     def get_database(self):
         dic = {
-            'creatorID' : "asas",          # 트랜잭션 생성자 서명
-            'TXType'    : "생산",          # 트랜잭션 분류
-            'T_hash'    : "asd",           # 현재 트랜잭션 해시
+            'creatorID'      : "asas",          # 트랜잭션 생성자 서명
+            'TXType'         : "생산",          # 트랜잭션 분류
+            'T_hash'         : "asd",           # 현재 트랜잭션 해시
 
-            'P_name'    : "딸기",          # 품목 이름
-            'P_From'    : "군산시",        # 품목 생산지, 산지
-            'P_grade'   : "상급",          # 품목 등급
-            'P_wight'   : "2kg",           # 품목 무게, Kg
-
-            'M_name'    : "박신재",        # 생산자 이름
-            'M_phone'   : "010-4646-4232", # 생산자 전화
-            'M_com'     : "군산대학교",    # 생산자 소속
-
-            'N_state'   : "입고",          # 배송상태
-            'N_else'    : "",              # 비고
+            'To_name1'       : "박신재", # 생산자(단체)이름
+            'To_phone'       : "010-4646-4232", # 생산자(단체)전화번호
+            'To_address1'    : "블루빌", # 생산자(단체)주소
+            'To_name2'       : "군산대", # 브랜드
+            'To_name3'       : "딸기", # 상품이름(재배품목명)
+            'To_kind'        : "매향", # 재배품종명
+            'To_address2'    : "디지털정보관", # 재배지주소
+            'To_culture'     : "하우스", # 재배작형
+            'To_harvesting'  : "2018-06-01", # 수확날짜
+            'To_shipment'    : "2018-06-05", # 출하날짜
+            'To_weight'      : "10", # 무게
+            'To_rating'      : "상", # 등급
+            'To_htn'         : "123-12-12312", # 이력추적관리번호
+            'To_pesticide'   : "", # 농약제품명
+            'To_pusage'      : "", # 농약용도
+            'To_pshape'      : "" # 농약형태
             }
         return dic
 
@@ -101,12 +104,12 @@ class Stakeholder:
         node1 = {
             'name' : "김기영",             # 멤버 이름
             'IP'   : "202.31.146.57",      # 멤버 IP
-            'MAC'  : "0c:54:a5:49:bf:fa",  # 멤버 MAC
+            'MAC'  : "90:9f:33:00:da:49",  # 멤버 MAC
             }
         node2 = {
             'name' : "박신재",             # 멤버 이름
             'IP'   : "202.31.146.48",      # 멤버 IP
-            'MAC'  : "90:9f:33:00:da:49",  # 멤버 MAC
+            'MAC'  : "0c:54:a5:49:bf:fa",  # 멤버 MAC
             }
         node3 = {
             'name' : "김기도",             # 멤버 이름
@@ -137,13 +140,25 @@ class Stakeholder:
                 count += 1
  
 class leader:
-    def __init__(self, Object):
-        self.Object = Object
+    def __init__(self, t):
+        temp = []
+
+        for i in range(0, len(t)):
+            temp.append(t[i])
+
+        for i in range(0, len(t)):
+            for j in range(0, len(t)):
+                if temp[i].sign[str(j)]:
+                    temp[0].sign[str(j)] = temp[i].sign[str(j)]
+                if temp[i].produce[str(j)]:
+                    temp[0].produce[str(j)] = temp[i].produce[str(j)]
+
+        self.Object = temp[0]
         AgreeCount = 0
         OppositionCount = 0
         if type(self.Object) == type(transaction()):
-            Information = Stakeholder()
-            for i in range(0, len(Object.Stakeholders)):
+            Information = Endorser()
+            for i in range(0, len(temp[0].endorsers)):
                 if self.Object.produce.get(str(i)) == {"produce":"agree"}:
                     AgreeCount += 1
                 elif self.Object.produce.get(str(i)) == {"produce":"Opposition"}:
@@ -156,15 +171,30 @@ class leader:
 
         else:
             print(2)
+        
 
 if __name__ == "__main__":
-    t1 = transaction(서명 = 'b', 이름='딸기', 검증 = {'IP':'202.31.146.57', 'Mac':'0c:54:a5:49:bf:fa'}, 타입="입고")
-    t1.setAttribute(검증={'IP':'202.31.146.48', 'Mac':'0c:54:a5:49:bf:fa'})
-    t1.setAttribute(검증={'IP':'202.31.146.58', 'Mac':'50-b7-c3-a2-dd-5b'})
+    t1 = transaction(서명='c', 생산자이름='박신재', 생산자전화번호='010-4646-4232', 생산자주소='블루빌', 브랜드='군산대', 상품이름='딸기', 재배품종='매향', 재배지주소='디지털정보관', 재배작형='하우스', 수확날짜='2018.06.01', 출하날짜='2018.06.05', 무게='10', 등급='상', 이력추적관리번호='123-12-12312', 농약제품명='', 농약용도='', 농약형태='', 검증={'IP':'202.31.146.57', 'Mac':'90:9f:33:00:da:49'}, 사인={}, 동의={})
+    t1.setAttribute(검증={'IP':'202.31.146.48', 'Mac':'0c:54:a5:49:bf:fa'}, 사인={}, 동의={})
+    t1.setAttribute(검증={'IP':'202.31.146.58', 'Mac':'50-b7-c3-a2-dd-5b'}, 사인={}, 동의={})
     
-    E  = Stakeholder(t1)
-    E1 = Stakeholder_1.Stakeholder1(t1)
-    E2 = Stakeholder_2.Stakeholder2(t1)
+    t2 = transaction(서명='c', 생산자이름='박신재', 생산자전화번호='010-4646-4232', 생산자주소='블루빌', 브랜드='군산대', 상품이름='딸기', 재배품종='매향', 재배지주소='디지털정보관', 재배작형='하우스', 수확날짜='2018.06.01', 출하날짜='2018.06.05', 무게='10', 등급='상', 이력추적관리번호='123-12-12312', 농약제품명='', 농약용도='', 농약형태='', 검증={'IP':'202.31.146.57', 'Mac':'90:9f:33:00:da:49'}, 사인={}, 동의={})
+    t2.setAttribute(검증={'IP':'202.31.146.48', 'Mac':'0c:54:a5:49:bf:fa'}, 사인={}, 동의={})
+    t2.setAttribute(검증={'IP':'202.31.146.58', 'Mac':'50-b7-c3-a2-dd-5b'}, 사인={}, 동의={})
 
-    L = leader(t1)
+    t3 = transaction(서명='c', 생산자이름='박신재', 생산자전화번호='010-4646-4232', 생산자주소='블루빌', 브랜드='군산대', 상품이름='딸기', 재배품종='매향', 재배지주소='디지털정보관', 재배작형='하우스', 수확날짜='2018.06.01', 출하날짜='2018.06.05', 무게='10', 등급='상', 이력추적관리번호='123-12-12312', 농약제품명='', 농약용도='', 농약형태='', 검증={'IP':'202.31.146.57', 'Mac':'90:9f:33:00:da:49'}, 사인={}, 동의={})
+    t3.setAttribute(검증={'IP':'202.31.146.48', 'Mac':'0c:54:a5:49:bf:fa'}, 사인={}, 동의={})
+    t3.setAttribute(검증={'IP':'202.31.146.58', 'Mac':'50-b7-c3-a2-dd-5b'}, 사인={}, 동의={})
+    
+    E  = endorser(t1)
+    E1 = stakeholder_1.endorser1(t2)
+    E2 = stakeholder_2.endorser2(t3)
+
+    temp_t = []
+
+    temp_t.append(t1)
+    temp_t.append(t2)
+    temp_t.append(t3)
+
+    L = leader(temp_t)
 

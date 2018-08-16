@@ -20,7 +20,7 @@ class blockToJson:
         if self.filename == None:
             return
         else:
-            try : self.filename = path + "block_" +  self.filename
+            try : self.filename = path +  self.filename
             except: print("filename error")
 
             try : self.data = kwargs['data']
