@@ -10,7 +10,7 @@ from chaincode.client_Json import *
 from chaincode.server_Json import *
 from chaincode.randFileName import *
 
-from Stakeholder.Stakeholder import *
+from Stakeholder.Stakeholder import Stakeholder
 from flagdb.kvstore import *
 
 from msp.msp import msp

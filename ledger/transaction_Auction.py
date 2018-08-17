@@ -1,3 +1,7 @@
+# 감독기관 \ 서류명 에 의해 작성 됨.
+# 법률 근거 0000 에 의해서 최소 정보 [  ] 가 산출 됨.
+
+
 import time, sys, os
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 

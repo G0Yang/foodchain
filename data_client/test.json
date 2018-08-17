@@ -1,5 +1,5 @@
 {
-  "TXID": "52qp2i55919387",
+  "TXID": "",
   "timestamp": 1533723173.9173927,
   "verstion": 0.2,
   "creatorID": {},
@@ -7,7 +7,7 @@
   "timeout": 0,
   "T_hash": "4721B50DAB394AFC1C6A3F323AEBBC4EC0F774CE6170292772CA9E6C188C3C84",
   "txCount": 0,
-  "Stakeholder": {},
+  "endorsers": {},
   "sign": {},
   "produce": {},
   "P_name": "kim",
