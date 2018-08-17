@@ -1,3 +1,5 @@
+# This Python file uses the following encoding: utf-8
+
 from ledger.transaction import transaction
 from ledger.blockheader import blockheader
 from ledger.block import block
@@ -236,10 +238,38 @@ if __name__ == "__main__":
     ttj = ""
     btj = ""
     ctj = ""
+    
+    permmision = None
+
+    while True:
+        print("│　　　　　　┌──────────┐　┌──────────　 ──────┬──────　│＼　　　　　　　│")
+        print("│　　　　　　│　　　　　│　│　　　　　　　　 　│　　　　│　＼　　　　　　│")
+        print("│　　　　　　│　　　　　│　│　　　　　　　　 　│　　　　│　　＼　　　　　│")
+        print("│　　　　　　│　　　　　│　│　　──────┐　　　　│　　　　│　　　＼　　　　│")
+        print("│　　　　　　│　　　　　│　│　　　　　│　　　　│　　　　│　　　　＼　　　│")
+        print("│　　　　　　│　　　　　│　│　　　　　│　　　　│　　　　│　　　　　＼　　│")
+        print("│　　　　　　│　　　　　│　│　　　　　│　　　　│　　　　│　　　　　　＼　│")
+        print("└──────────　└──────────┘　└──────────┘　──────┴──────　│　　　　　　　＼│")
+
+        ID = str(input('ID : '))
+        PW = str(input('PW : '))
+
+        try :
+            permmision = Login(ID, PW)
+
+        except Exception as e:
+            print(e)
+
+        if permmision is not None:
+            break
+        else:
+            print("Login False!!")
+
+
 
     while True:
         print("")
-        print("-------------- 종합 예제 --------------")
+        print("-------------------- 종합 예제 --------------------")
         print("1. make transaction")
         print("2. send transaction")
 

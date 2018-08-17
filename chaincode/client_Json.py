@@ -1,3 +1,5 @@
+# This Python file uses the following encoding: utf-8
+
 import socket, os, pathlib, sys
  
 HOST = 'localhost'

@@ -1,3 +1,5 @@
+# This Python file uses the following encoding: utf-8
+
 # 기영 202.31.146.57
 # 기도 202.31.147.203
 # 신재 202.31.146.48
@@ -72,6 +74,7 @@ if __name__ == "__main__":
     print("")
 
     num = int(input('select : '))
+
     if num == 1:
         print("1. run server")
         socket_server()
