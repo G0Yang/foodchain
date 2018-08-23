@@ -93,6 +93,21 @@
 -> 파일명은 능동적으로 변할 수 있음.
 2. 파일을 클라이언트가 서버로 전송하기 위해 test.py에 서버로 Json파일을 데이터화 해서 보내는 작업까지 완료.
 
+2018.08.17 패치노트
+1. 실제 서버안의 노드에 소스를 올려서 테스트 진행
+-> 인코딩 문제 발생 <- # This Python file uses the following encoding: utf-8  구문 삽입하여 해결
+-> 인코딩 https://www.python.org/dev/peps/pep-0263/ 참고
+-> pip install couchdb 필요
+-> 기본 centos7 에는 2.7버전이 기본 내장. <- http://victorydntmd.tistory.com/256 을 참고하여 3.6으로 변환하여 작업 진행
+-> wget --ftp-user=dnp --ftp-password=1234 ftp://dnpcloud.ipdisk.co.kr/HDD1/Torrent/foodchain.zip 사용하여 다운로드 가능.
+-> 압축을 출기 위해서 yum install -y unzip 수행
+-> 노드 안에서 자잘한 문제들 발생... <- 변수가 많아서 생략
+-> 테스트를 진행한 Node_Test_History.txt 별도 저장
+2. 데이터화하여 전송을 완료했지만 데이터를 파일로 변환하는 과정이 없었던 부분 추가 완료.
+-> test.py의 2번 항목 작업 완료
+-> Foodchain.py 의 15번 항목 서버열기 와 test.py의 2번 항목 tx 보내기 를 테스트 함. <- 정상작동 확인
+-> 2018.08.17_test1.png, 2018.08.17_test2.png 항목으로 확인 가능
+
 2018.08.23 패치노트
 1. test.py 제작 완료
 -> 기존 체인 data_server/ch_1.json으로 통합하여 블록을 추가
