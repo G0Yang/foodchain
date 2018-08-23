@@ -87,7 +87,7 @@ def sendChain(Chain):
         return False
     print("send chain")
     ctj = chainToJson(filename = "ch_" + randFileName(), data = Block)
-    ctj.appendBlock(Chain.toDict())
+    ctj.append(Chain.toDict())
     ctj.saveJson()
     return ctj
 
@@ -110,7 +110,7 @@ def appendBlockInChain(Block, Chain, ctj):
     if type(Chain) != type(chain()) or type(Block) != type(block()):
         return False
     print("append Block In Chain")
-    try: ctj.appendBlock(Block.toDict())
+    try: ctj.append(Block.toDict())
     except: print("append error!!!")
 
     try: ctj.saveJson()

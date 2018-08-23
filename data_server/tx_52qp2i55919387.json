@@ -11,12 +11,12 @@
   "sign": {},
   "produce": {},
   "P_name": "kim",
-  "P_From": "",
-  "P_grade": "",
-  "P_wight": "",
-  "M_name": "",
-  "M_phone": "",
+  "P_From": "군산",
+  "P_grade": "특",
+  "P_wight": "5kg",
+  "M_name": "현대",
+  "M_phone": "010-1234-5678",
   "M_com": "",
-  "N_state": "",
+  "N_state": "보통",
   "N_else": ""
 }

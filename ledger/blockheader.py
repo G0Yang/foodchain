@@ -1,5 +1,4 @@
 # This Python file uses the following encoding: utf-8
-
 import sys, os
 
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
@@ -8,7 +7,7 @@ import time, metadata
 class blockheader:
     def __init__(self):
         self.version = metadata.BaseVersion
-        self.blockNumber = None
+        self.blockNumber = 0
         self.timestamp = time.time()
         self.currentBlockHash = ""
         self.previousBlockHash = ""

@@ -1,5 +1,4 @@
 # This Python file uses the following encoding: utf-8
-
 import sys
 import os
 import socket
@@ -10,7 +9,7 @@ from chaincode.chainToJson import *
 import stakeholder_1 
 import stakeholder_2 
 
-class endorser:
+class stakeholder:
     def addSign(self, Object, number, Whether, sign):
         Information = Endorser()
         Sign = Information.sign
@@ -56,7 +55,7 @@ class endorser:
         else:
             print(2)
             
-class Endorser:
+class Stakeholder:
     def __init__(self):
         self.IP   = self.get_ipaddress()
         self.Mac  = self.get_macaddress()

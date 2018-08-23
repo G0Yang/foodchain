@@ -1,6 +1,18 @@
 # This Python file uses the following encoding: utf-8
+import socketserver, os, pathlib, sys, socket
+from os.path import exists
 
-import socketserver, os, pathlib, sys
+from ledger.block import block
+from ledger import transaction
+from chaincode.transactionToJson import *
+from chaincode.server_Json import *
+from chaincode.blockToJson import blockToJson
+from chaincode.randFileName import *
+from chaincode.leader_rand import *
+
+from uuid import getnode
+from ledger.transaction import *
+from chaincode.chainToJson import *
 from os.path import exists
 
 HOST = ''
@@ -8,25 +20,58 @@ PORT = 9009
  
  
 path_server = os.path.dirname(os.path.abspath(os.path.dirname(__file__))) + "\data_server\\"
-
+file_list= os.listdir(path_server)
 class MyTcpHandler(socketserver.BaseRequestHandler):
     def handle(self):
         data_transferred = 0
         print('[%s] 연결됨' %self.client_address[0])
+        data = {}
         data = self.request.recv(1024) # 클라이언트로 부터 파일이름을 전달받음
-
-        filename = str(data).split('"')[3]
-
-        filename = "tx_" + filename + ".json"
-
-        if filename is not None:
-            with open(path_server + filename, 'wb') as f:
-                try:
-                    f.write(data)
-                except Exception as e:
-                    print(e)
-
-
+        
+        if  str(data).split('"')[1] == "TXID":
+            filename = str(data).split('"')[3]
+            filename = "tx_" + filename + ".json"
+            if exists(path_server + filename):
+                with open(path_server + leader_rand() +filename, 'wb') as f:
+                    try:
+                        f.write(data)
+                    except Exception as e:
+                        print(e)
+            else:
+                with open(path_server + filename, 'wb') as f:
+                    try:
+                        f.write(data)                       
+                    except Exception as e:
+                        print(e)
+        else:
+            filename = str(data).split('"')[3]
+            filename = "block_" + filename + ".json"
+            if filename is not None:
+                with open(path_server + filename, 'wb') as f:
+                    try:
+                        f.write(data)
+                    except Exception as e:
+                        print(e)
+            btj = blockToJson(filename = filename)
+            btj.data = btj.loadJson()
+            Block = block()
+            Block.fromDict(Dict = btj.data)
+            filename = "ch_1.json"
+            if not exists(path + filename):
+                Chain = chain(CHID = randFileName(), block = Block)
+                Chain.append(Block)
+                ctj = chainToJson(filename = filename, data = Chain)
+                ctj.saveJson()
+            else:
+                ctj = chainToJson(filename = filename)
+                ctj.data = ctj.loadJson()
+                Chain = chain()
+                Chain.fromDict(Dict = ctj.data)
+                Chain.append(Block)
+                ctj = chainToJson(filename = filename, data = Chain)
+                ctj.saveJson()
+            print(Chain.toDict())
+            
 
  
 def runServer(Host = HOST, Port  = PORT):

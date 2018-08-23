@@ -1,5 +1,4 @@
 # This Python file uses the following encoding: utf-8
-
 import json, pathlib, sys, os
 
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
@@ -17,7 +16,7 @@ class blockToJson:
         self.filename = None
 
         try: self.filename = kwargs['filename']
-        except: print("kwargw['filename'] error")
+        except: print("kwargs['filename'] error")
 
         if self.filename == None:
             return

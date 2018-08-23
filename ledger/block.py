@@ -1,16 +1,17 @@
 # This Python file uses the following encoding: utf-8
-
 import time, sys, os
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 
 from ledger.transaction import transaction
 from ledger.blockheader import *
 from hash256.hash256 import *
+from chaincode.randFileName import *
 
 class block:
     def __init__(self, *args, **kwargs):
         self.transactionCount = 0
         self.blocksize = 0
+        self.blockID=""
         self.BH = blockheader()
         self.BB = []
         try: 
@@ -22,6 +23,7 @@ class block:
                 self.BB[0].txCount = self.transactionCount
                 sizeof = str(self.toDict())
                 self.blocksize = len(sizeof)
+                self.blockID=randFileName()[0:-5]
         except:
             print("init Error")
         return
@@ -29,11 +31,9 @@ class block:
     def append(self, Object):
         try: 
             if str(type(Object)) == "<class 'ledger.transaction.transaction'>":
-                self.BB.append(Object)  
-
+                self.BB.append(Object)
                 self.transactionCount = self.transactionCount + 1
                 self.BB[-1].txCount = self.transactionCount
-
                 self.blocksize = len(str(self.toDict()))
                 self.BH.setCurrentHash(hash256(str(self.toDict())).getHash())
             else:
@@ -63,6 +63,7 @@ class block:
 
     def toDict(self):
         Dict = {
+            'blockID' : self.blockID,
             'transactionCount' : self.transactionCount,
             'blocksize' : self.blocksize,
             'blockheader' : self.BH.toDict()
@@ -75,6 +76,8 @@ class block:
 
     def fromDict(self, Dict):
         try:
+            try: self.blockID = Dict['blockID']
+            except: print("blockID error")
             try : self.transactionCount = Dict['transactionCount']
             except: print("transactionCount error")
 
