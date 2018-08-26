@@ -1,0 +1,200 @@
+﻿226  wget \\202.31.147.229\v0.2.1
+  227  wget \\dnpcloud.ipdisk.co.kr\Torrent\v0.2.1
+  228  wget dnpcloud.ipdisk.co.kr/Torrent/v0.2.1
+  229  ls
+  230  unzip
+  231  yum
+  232  yum install -y unzip
+  233  unzip v0.2.1
+  234  ll
+  235  mv v0.2.1 foodchain
+  236  ll
+  237  unzip foodchain
+  238  mv foodchain foodchain.zip
+  239  unzip foodchain.zip
+  240  ll
+  241  sudo chmod 777 foodchain.zip
+  242  unzip foodchain.zip
+  243  wget dnpcloud.ipdisk.co.kr/Torrent/v0.2
+  244  ll
+  245  cd v0.2
+  246  wget -r dnpcloud.ipdisk.co.kr/Torrent/v0.2
+  247  ll
+  248  cd dnpcloud.ipdisk.co.kr/
+  249  ls
+  250  cd Torrent/
+  251  ls
+  252  ll
+  253  unzip v0.2
+  254  wget -r dnpcloud.ipdisk.co.kr/Torrent/v0.2
+  255  ls
+  256  cd dnpcloud.ipdisk.co.kr/
+  257  ls
+  258  cd Tr
+  259  cd Torrent/
+  260  ls
+  261  ll
+  262  unzip v0.2
+  263  cd ..
+  264  ll
+  265  rm dnp* food*
+  266  ll
+  267  rm v0.2
+  268  ll
+  269  where
+  270  cd ..
+  271  ls
+  272  cd home/
+  273  ls
+  274  mkdir foodchain
+  275  cd foodchain/
+  276  ll
+  277  wget dnpcloud.ipdisk.co.kr/Torrent/v0.2.zip
+  278  ll
+  279  unzip v0.2.zip
+  280  rm v0.2.zip
+  281  wget dnpcloud.ipdisk.co.kr/Torrent/v0.2.zip
+  282  rm v0.2.zip
+  283  ls
+  284  wget dnpcloud.ipdisk.co.kr/Torrent/foodchain.zip
+  285  ll
+  286  rm foodchain.zip
+  287  wget dnpcloud.ipdisk.co.kr/Torrent/foodchain.zip
+  288  wget --ftp-user=admin --ftp-password=drgf35841 ftp://ftp.dnpcloud.ipdisk.co.kr/Torrent/foodchain.zip
+  289  wget --ftp-user=admin --ftp-password=drgf35841 ftp://dnpcloud.ipdisk.co.kr/Torrent/foodchain.zip
+  290  wget --ftp-user=admin --ftp-password=drgf35841 ftp://ftp.dnpcloud.ipdisk.co.kr/HDD1/Torrent/foodchain.zip
+  291  wget --ftp-user=admin --ftp-password=drgf35841 ftp://dnpcloud.ipdisk.co.kr/HDD1/Torrent/foodchain.zip
+  292  ll
+  293  rm *
+  294  wget --ftp-user=admin --ftp-password=drgf35841 ftp://dnpcloud.ipdisk.co.kr/HDD1/Torrent/foodchain.zip
+  295  ll
+  296  unzip foodchain.zip
+  297  ll
+  298  python
+  299  ./Foodchain.py
+  300  ll
+  301  rm *
+  302  ll
+  303  rm -Fr
+  304  rm -F
+  305  rm -r
+  306  rm -r *
+  307  rm -rF *
+  308  rm -rf *
+  309  ll
+  310  wget --ftp-user=admin --ftp-password=drgf35841 ftp://dnpcloud.ipdisk.co.kr/HDD1/Torrent/foodchain.zip
+  311  chmod 646 foodchain.zip
+  312  unzip foodchain.zip
+  313  ll
+  314  chmod 646 *
+  315  ./Foodchain.py
+  316  chmod 777 *
+  317  ./Foodchain.py
+  318  ll
+  319  rm -rf *
+  320  ll
+  321  wget --ftp-user=admin --ftp-password=drgf35841 ftp://dnpcloud.ipdisk.co.kr/HDD1/Torrent/foodchain.zip
+  322  ll
+  323  chmod 777 foodchain.zip
+  324  unzip foodchain.zip
+  325  ll
+  326  ./Foodchain.py
+  327  sudo python Foodchain.py
+  328  rm -rf *
+  329  wget --ftp-user=admin --ftp-password=drgf35841 ftp://dnpcloud.ipdisk.co.kr/HDD1/Torrent/foodchain.zip
+  330  chmod 777 foodchain.zip
+  331  unzip foodchain.zip
+  332  rm -rf *
+  333  ll
+  334  ls
+  335  ll
+  336  wget --ftp-user=admin --ftp-password=drgf35841 ftp://dnpcloud.ipdisk.co.kr/HDD1/Torrent/foodchain.zip
+  337  ll
+  338  ls
+  339  chmod 777 foodchain.zip
+  340  unzip foodchain.zip
+  341  ls -all
+  342  rm .git
+  343  rm -r .git/
+  344  rm -rf .git/
+  345  rm -rf.*
+  346  rm -rf .*
+  347  ll
+  348  ls -all
+  349  unzip foodchain.zip
+  350  ll
+  351  sudo python Foodchain.py
+  352  rm -rf * .*
+  353  ls
+  354  ll
+  355  ls -all
+  356  wget --ftp-user=admin --ftp-password=drgf35841 ftp://dnpcloud.ipdisk.co.kr/HDD1/Torrent/foodchain.zip
+  357  chmod 777 foodchain.zip
+  358  unzip foodchain.zip
+  359  sudo python Foodchain.py
+  360  vi /home/foodchain/ledger/chain.py
+  361  sudo python Foodchain.py
+  362  pip install pathlib
+  363  yum install -y pip
+  364  python -v
+  365  python -version
+  366  python -v
+  367  yum uninstall -y python
+  368  yum uninstall
+  369  python --version
+  370  yum install -y https://centos7.iuscommunity.org/ius-release.rpm
+  371  yum install -y python36u
+  372  yum install -y python36u-devel
+  373  yum install -y python36u-pip
+  374  ll
+  375  python3.6 foodchain.zip
+  376  python3.6 Foodchain.py
+  377  pip
+  378  pip3.6 install -y couchdb
+  379  pip3.6 install couchdb
+  380  pip install --upgrade pip
+  381  pip3.6 install --upgrade pip
+  382  pip3.6 install couchdb
+  383  pip install couchdb
+  384  vi /root/.bashrc
+  385  source /root/.bashrc
+  386  vi /root/.bashrc
+  387  source /root/.bashrc
+  388  python --version
+  389  python Foodchain.py
+  390  vi Foodchain.py
+  391  python Foodchain.py
+  392  python test.py
+  393  vi test.py
+  394  python test.py
+  395  ls
+  396  ll
+  397  cd data_server/
+  398  ll
+  399  cd ..
+  400  cd data_client/
+  401  ll
+  402  cd ..
+  403  vi test.py
+  404  python test.py
+  405  vi test.py
+  406  python test.py
+  407  path
+  408  vi test.py
+  409  python test.py
+  410  ls
+  411  vi test.py
+  412  python test.py
+  413  vi test.py
+  414  python test.py
+  415  clear
+  416  python test.py
+  417  ll
+  418  cd ..
+  419  ll
+  420  wget --ftp-user=dnp --ftp-password=1234 ftp://dnpcloud.ipdisk.co.kr/HDD1/Torrent/foodchain.zip
+  421  ll
+  422  rm foodchain.zip
+  423  cd foodchain/
+  424  ls
+  425  history

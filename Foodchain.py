@@ -9,7 +9,7 @@ from chaincode.transactionToJson import transactionToJson
 from chaincode.blockToJson import blockToJson
 from chaincode.chainToJson import chainToJson
 from chaincode.client_Json import *
-from chaincode.server_Json import *
+from chaincode.socket_Json import *
 from chaincode.randFileName import *
 
 from Stakeholder.Stakeholder import Stakeholder

@@ -6,7 +6,7 @@ import time, metadata
 
 class blockheader:
     def __init__(self):
-        self.version = metadata.BaseVersion
+        self.version = metadata.metadata["BaseVersion"]
         self.blockNumber = 0
         self.timestamp = time.time()
         self.currentBlockHash = ""

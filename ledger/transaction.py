@@ -13,7 +13,7 @@ class transaction:
         # 제안서 부분
         self.TXID = ""
         self.timestamp = time.time()
-        self.verstion = metadata.BaseVersion
+        self.verstion = metadata.metadata["BaseVersion"]
         self.creatorID = {} # 트랜잭션 생성자 서명
         self.TXType = "" # 트랜잭션 분류
         self.timeout = 0
