@@ -1,5 +1,3 @@
-# This Python file uses the following encoding: utf-8
-
 # 기영 202.31.146.57
 # 기도 202.31.147.203
 # 신재 202.31.146.48
@@ -14,9 +12,7 @@
 # 5. 기존 장부는 data_server\ch_8srkziel366214.json 을 기본으로 한다.
 # 6. 마지막 10. chain append는 모든 노드가 최대한 비슷한 시간에 동시에 수행되어야 한다.
 # 7. 결론적으로 tx_52qp2i55919387.json 의 내용이 합의를 통해서 ch_8srkziel366214.json 에 추가되어야 한다.
-
 global ip 
-
 import socketserver, os, pathlib, sys, socket
 from os.path import exists
 
@@ -32,7 +28,7 @@ from uuid import getnode
 from ledger.transaction import *
 from chaincode.chainToJson import *
 
-ip = ['202.31.146.57','202.31.147.203','202.31.146.48','202.31.146.58']
+ip = ['202.31.146.48','202.31.146.57','202.31.147.203','202.31.146.58']
 
 # 1. run server
 def socket_server():
@@ -75,117 +71,16 @@ def take_after_tx(filename):
     print(Transaction.toDict())
     return Transaction
     
-# 4. agree
 
-class endorser:
-    def addSign(self, Object, number, Whether, sign):
-        Information = Endorser()
-        Sign = Information.sign
-        Object.produce = Whether
-        Object.sign = Sign
-        return Object
-    
-    def Verification(self, Object):
-        Information = Endorser()
-        IP = Information.IP
-        data = Information.get_database()
-        for i in range(0, len(Object.endorsers)):
-            if Object.endorsers.get(str(i)) == {'IP':IP}:
-                
-                SameCount = 0
-                InconsistencyCount = 0
-                dic = Object.toDict()
-                print(data)
-                print(dic)
-                for k in data.keys():
-                    if dic[k] == data[k]:
-                        SameCount += 1
-                    else :
-                        InconsistencyCount += 1    
-                if (SameCount / (SameCount + InconsistencyCount)) * 100 > 50:
-                    self.Object = self.addSign(self.Object, str(i), "agree", Object.creatorID)
-                    
-                    print("퍼센트가 " + str((SameCount / (SameCount + InconsistencyCount)) * 100) + "이므로 블록생성 찬성")
-                    return self.Object
-                elif (SameCount / (SameCount + InconsistencyCount)) * 100 < 51:
-                    self.Object = self.addSign(self.Object, str(i), "Opposition", Object.creatorID)
-                   
-                    print("퍼센트가 " + str((SameCount / (SameCount + InconsistencyCount)) * 100) + "이므로 블록생성 반대")
-                    return self.Object
-
-    def __init__(self, Object):
-        self.Object = Object
-        if type(self.Object) == type(transaction()):
-            self.Verification(self.Object)
-        else:
-            print(2)
-            
-class Endorser:
-    def __init__(self):
-        self.IP   = self.get_ipaddress()
-        self.name = '김기도'
-        self.sign = 'GD'
-
-
-    def get_ipaddress(self):
-        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        s.connect(("gmail.com",80))
-        r = s.getsockname()[0]
-        s.close()
-        return r
-    
-    def get_database(self):
-        dic = {
-            "P_name": "딸기",  
-            "P_From": "군산",
-            "P_grade": "특",
-            "P_wight": "10",
-            "M_name": "김기도",
-            "M_phone": "01092668459",
-            "N_state": "보통",
-            }
-        return dic
-
-
-# 6. leader Synthesis
-class leader:
-    def __init__(self,Txname):
-        path_dir = os.path.dirname(__file__) + "\data_server\\"
-        global result
-        file_list = os.listdir(path_dir)
-        file_list.sort()
-        count=0
-        discount=0
-        for i in file_list:
-            if i.find(Txname) is not -1:
-                ttj = transactionToJson(filename = i)
-                ttj.data = ttj.loadJson()
-                Transaction = transaction()
-                Transaction.fromDict(Dict = ttj.data)
-                print(Transaction.toDict())
-                if Transaction.produce == 'agree':
-                    count=count+1
-                else:
-                    discount= discount+1
-        result = count/(count+discount)*100
-         
-        if result>50:
-             print("블록 찬성여부가 " + str(result) + "%이므로 블록을 생성합니다.")
-             
-        else:
-             print("블록 찬성여부가 " + str(result) + "%이므로 블록을 생성하지 않습니다.")
-        
-        
 # 7. make_block
 def make_block(tx):
     Block = block(tx)
     print(Block.toDict())
     btj = blockToJson(filename = "block_" + Block.blockID+".json", data = Block)
-    btj.saveJson()
+    return Block
 
 # 9. block dispersion
 def block_dispersion(Host,Port,filename):
-    print(type(Host), Host)
     path = os.path.dirname(__file__) + "\data_server\\"
     filename = path + filename
 
@@ -233,7 +128,6 @@ if __name__ == "__main__":
     filename = ""
     result = 0
     tx=None
-
     while True:
         
         print("---------------- socket - blockchain test ----------------")
@@ -256,10 +150,30 @@ if __name__ == "__main__":
         
         elif num == 3:
             print("3. make block")
-            make_block(tx)
+            block = make_block(tx)
             
         elif num == 4:
             print("4. Block dispersion")
-            filename = input('filename : ')
+            filename = "block_" + block.blockID + ".json"
             for i in ip:
-                block_dispersion(Host = i,Port= 9009,filename=filename)
+                try:
+                    block_dispersion(Host = i,Port= 9009,filename=filename)
+                except Exception as e:
+                    pass
+            filename="ch_1.json"
+            ctj = chainToJson(filename=filename)
+            if not exists(path + filename):
+                Chain = chain(CHID = chid, block = block)
+                Chain.append(block)
+                ctj = chainToJson(filename = filename, data = Chain)
+                ctj.saveJson()
+            else:
+                ctj = chainToJson(filename = filename)
+                ctj.data = ctj.loadJson()
+                Chain = chain()
+                Chain.fromDict(Dict = ctj.data)
+                Chain.append(block)
+                ctj = chainToJson(filename = filename, data = Chain)
+                ctj.saveJson()
+            print(Chain.toDict())
+            
