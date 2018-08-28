@@ -17,23 +17,22 @@ import socketserver, os, pathlib, sys, socket
 from os.path import exists
 
 from ledger.block import block
-from ledger import transaction
 from chaincode.transactionToJson import *
 from chaincode.server_Json import *
 from chaincode.blockToJson import blockToJson
 from chaincode.randFileName import *
 from chaincode.leader_rand import *
 
+from msp.msp_Client.request_client import *
+
 from uuid import getnode
 from ledger.transaction import *
 from chaincode.chainToJson import *
 
-ip = ['202.31.146.48','202.31.146.57','202.31.147.203','202.31.146.58']
-
 # 1. run server
 def socket_server():
     try :
-        HOST = "202.31.146.57"
+        HOST = "localhost"
         PORT =  9009
         runServer(Host = HOST, Port  = PORT)
     except:
@@ -85,6 +84,7 @@ def block_dispersion(Host,Port,filename):
     filename = path + filename
 
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+        sock.settimeout(5)
         sock.connect((Host,Port))
 
         if not exists(filename): # 파일이 해당 디렉터리에 존재하지 않으면
@@ -128,6 +128,21 @@ if __name__ == "__main__":
     filename = ""
     result = 0
     tx=None
+
+    while True:
+        print("login")
+        
+        ID = input("ID : ")
+        PW = input("PW : ")
+
+        msp = mspRequest()
+        tmp = msp.verificationRequest(ID, PW)
+
+        print(tmp, type(tmp))
+
+        if tmp == "True":
+            break
+
     while True:
         
         print("---------------- socket - blockchain test ----------------")
@@ -149,12 +164,14 @@ if __name__ == "__main__":
             tx = makeTransaction()
         
         elif num == 3:
-            print("3. make block")
-            block = make_block(tx)
+            print("3. make BLock")
+            BLock = make_block(tx)
             
         elif num == 4:
             print("4. Block dispersion")
-            filename = "block_" + block.blockID + ".json"
+            filename = "block_" + BLock.blockID + ".json"
+            ip = ipv4Request()
+            num, ip = ip.ipv4Request("01")
             for i in ip:
                 try:
                     block_dispersion(Host = i,Port= 9009,filename=filename)
@@ -163,8 +180,8 @@ if __name__ == "__main__":
             filename="ch_1.json"
             ctj = chainToJson(filename=filename)
             if not exists(path + filename):
-                Chain = chain(CHID = chid, block = block)
-                Chain.append(block)
+                Chain = chain(CHID = chid, block = BLock)
+                Chain.append(BLock)
                 ctj = chainToJson(filename = filename, data = Chain)
                 ctj.saveJson()
             else:
@@ -172,7 +189,7 @@ if __name__ == "__main__":
                 ctj.data = ctj.loadJson()
                 Chain = chain()
                 Chain.fromDict(Dict = ctj.data)
-                Chain.append(block)
+                Chain.append(BLock)
                 ctj = chainToJson(filename = filename, data = Chain)
                 ctj.saveJson()
             print(Chain.toDict())

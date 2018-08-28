@@ -2,15 +2,14 @@
   "ExpandedNodes": [
     "",
     "\\chaincode",
-    "\\client",
-    "\\data_client",
     "\\data_server",
-    "\\flagdb",
-    "\\hash256",
+    "\\encryption",
+    "\\encryption\\privateKey",
+    "\\encryption\\publicKey",
     "\\ledger",
     "\\msp",
-    "\\Stakeholder"
+    "\\msp\\msp_Member"
   ],
-  "SelectedNode": "\\Foodchain.py",
+  "SelectedNode": "\\chaincode\\blockToJson.py",
   "PreviewInSolutionExplorer": false
 }
