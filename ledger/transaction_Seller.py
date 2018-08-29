@@ -4,7 +4,7 @@ sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 
 from hash256.hash256 import *
 
-class transaction:
+class transaction_Seller:
     def __init__(self, *args, **kwargs):
         #-- 고정 트랜잭션 항목 --
         # 제안서 부분
@@ -23,7 +23,7 @@ class transaction:
 
         # -- 판매 트랜잭션 항목 --
         self.S_groupname = "" # 단체이름
-
+        self.S_CRNumber = "" # 사업자등록번호
         self.S_managername = "" # 담당자이름
         self.S_managerphone = "" # 담당자전화번호
 
@@ -51,6 +51,9 @@ class transaction:
 
             try :   self.S_groupname = kwargs['단체이름']
             except: print("단체이름 error")
+            
+            try :   self.S_CRNumber = kwargs['사업자등록번호']
+            except: print("사업자등록번호 error")
 
             try :   self.S_managername = kwargs['담당자이름']
             except: print("담당자이름 error")
@@ -61,7 +64,7 @@ class transaction:
             try :   self.S_goodsname = kwargs['상품이름']
             except: print("상품이름 error")
 
-            try :   self.S_htnumber = kwargs['이력추적 관리번호']
+            try :   self.S_htnumber = kwargs['이력추적관리번호']
             except: print("이력추적 관리번호 error")
 
             try :   self.S_weight = kwargs['상품무게']
@@ -98,6 +101,9 @@ class transaction:
 
             try :   self.S_groupname = kwargs['단체이름']
             except: print("단체이름 error")
+            
+            try :   self.S_CRNumber = kwargs['사업자등록번호']
+            except: print("사업자등록번호 error")
 
             try :   self.S_managername = kwargs['담당자이름']
             except: print("담당자이름 error")
@@ -108,7 +114,7 @@ class transaction:
             try :   self.S_goodsname = kwargs['상품이름']
             except: print("상품이름 error")
 
-            try :   self.S_htnumber = kwargs['이력추적 관리번호']
+            try :   self.S_htnumber = kwargs['이력추적관리번호']
             except: print("이력추적 관리번호 error")
 
             try :   self.S_weight = kwargs['상품무게']
@@ -150,6 +156,7 @@ class transaction:
             'produce'   : self.produce,
 
             'S_groupname' : self.S_groupname,
+            'S_CRNumber' : self.S_CRNumber,
             'S_managername' : self.S_managername,
             'S_managerphone' : self.S_managerphone,
             'S_goodsname' : self.S_goodsname,

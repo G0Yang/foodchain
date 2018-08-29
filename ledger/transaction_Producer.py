@@ -4,7 +4,7 @@ sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 
 from hash256.hash256 import *
 
-class transaction:
+class transaction_Producer:
     def __init__(self, *args, **kwargs):
 
         self.flag = {}
@@ -24,24 +24,25 @@ class transaction:
         self.sign = {}
         self.produce = {}
 
-        # -- 토마토 트랜잭션 항목 --
-        self.Sb_name = "" # 생산자(단체)이름
-        self.Sb_phone = "" # 생산자(단체)전화번호
-        self.Sb_address = "" # 생산자(단체)주소
-        self.Sb_brand = "" # 브랜드
-        self.Sb_goodsname = "" # 상품이름(재배품목명)
-        self.Sb_kind = "" # 재배품종명
-        self.Sb_CAddress = "" # Culture Address
-        self.Sb_culture = "" # 재배작형
-        self.Sb_harvesting = "" # 수확날짜
-        self.Sb_shipment = "" # 출하날짜
-        self.Sb_weight = "" # 무게
-        self.Sb_rating = "" # 등급
-        self.Sb_sc = "" # 당도
-        self.Sb_htn = "" # 이력추적관리번호
-        self.Sb_pesticide = "" # 농약제품명
-        self.Sb_pusage = "" # 농약용도
-        self.Sb_pshape = "" # 농약형태
+        # -- 생산 트랜잭션 항목 --
+        self.P_name = "" # 생산자(단체)이름
+        self.P_phone = "" # 생산자(단체)전화번호
+        self.P_address = "" # 생산자(단체)주소
+        self.P_brand = "" # 브랜드
+        self.P_goodsname = "" # 상품이름(재배품목명)
+        self.P_kind = "" # 재배품종명
+        self.P_CAddress = "" # Culture Address
+        self.P_culture = "" # 재배작형
+        self.P_harvesting = "" # 수확날짜
+        self.P_shipment = "" # 출하날짜
+        self.P_weight = "" # 무게
+        self.P_rating = "" # 등급
+        self.P_sc = "" # 당도
+        self.P_htn = "" # 이력추적관리번호
+        self.P_CRNumber = "" # 사업자등록번호
+        self.P_pesticide = "" # 농약제품명
+        self.P_pusage = "" # 농약용도
+        self.P_pshape = "" # 농약형태
 
         
         try:
@@ -57,55 +58,58 @@ class transaction:
             try :   self.creatorID = kwargs['서명']
             except: print("서명 error")
 
-            try :   self.Sb_name = kwargs['생산자이름'] 
+            try :   self.P_name = kwargs['생산자이름'] 
             except: print("생산자이름 error")
 
-            try :   self.Sb_phone = kwargs['생산자전화번호'] 
+            try :   self.P_phone = kwargs['생산자전화번호'] 
             except: print("생산자전화번호 error")
 
-            try :   self.Sb_address = kwargs['생산자주소'] 
+            try :   self.P_address = kwargs['생산자주소'] 
             except: print("생산자주소 error")
 
-            try :   self.Sb_brand = kwargs['브랜드'] 
+            try :   self.P_brand = kwargs['브랜드'] 
             except: print("브랜드 error")
             
-            try :   self.Sb_goodsname = kwargs['상품이름'] 
+            try :   self.P_goodsname = kwargs['상품이름'] 
             except: print("상품이름 error")
 
-            try :   self.Sb_kind = kwargs['재배품종'] 
+            try :   self.P_kind = kwargs['재배품종'] 
             except: print("재배품종 error")
 
-            try :   self.Sb_CAddress = kwargs['재배지주소'] 
+            try :   self.P_CAddress = kwargs['재배지주소'] 
             except: print("재배지주소 error")
 
-            try :   self.Sb_culture = kwargs['재배작형'] 
+            try :   self.P_culture = kwargs['재배작형'] 
             except: print("재배작형 error")
             
-            try :   self.Sb_harvesting = kwargs['수확날짜'] 
+            try :   self.P_harvesting = kwargs['수확날짜'] 
             except: print("수확날짜 error")
             
-            try :   self.Sb_shipment = kwargs['출하날짜'] 
+            try :   self.P_shipment = kwargs['출하날짜'] 
             except: print("출하날짜 error")
             
-            try :   self.Sb_weight = kwargs['무게'] 
+            try :   self.P_weight = kwargs['무게'] 
             except: print("무게 error")
             
-            try :   self.Sb_rating = kwargs['등급'] 
+            try :   self.P_rating = kwargs['등급'] 
             except: print("등급 error")
             
-            try :   self.Sb_sc = kwargs['당도'] 
+            try :   self.P_sc = kwargs['당도'] 
             except: print("당도 error")
             
-            try :   self.Sb_htn = kwargs['이력추적관리번호'] 
+            try :   self.P_htn = kwargs['이력추적관리번호'] 
             except: print("이력추적관리번호 error")
+            
+            try :   self.P_CRNumber = kwargs['사업자등록번호'] 
+            except: print("사업자등록번호 error")
 
-            try :   self.Sb_pesticide = kwargs['농약제품명'] 
+            try :   self.P_pesticide = kwargs['농약제품명'] 
             except: print("농약제품명 error")
             
-            try :   self.Sb_pusage = kwargs['농약용도'] 
+            try :   self.P_pusage = kwargs['농약용도'] 
             except: print("농약용도 error")
             
-            try :   self.Sb_pshape = kwargs['농약형태'] 
+            try :   self.To_pshape = kwargs['농약형태'] 
             except: print("농약형태 error")
 
             self.T_hash = hash256(str(self.toDict())).getHash()
@@ -128,55 +132,58 @@ class transaction:
             try :   self.creatorID = kwargs['서명']
             except: print("서명 error")
 
-            try :   self.Sb_name = kwargs['생산자이름'] 
+            try :   self.P_name = kwargs['생산자이름'] 
             except: print("생산자이름 error")
 
-            try :   self.Sb_phone = kwargs['생산자전화번호'] 
+            try :   self.P_phone = kwargs['생산자전화번호'] 
             except: print("생산자전화번호 error")
 
-            try :   self.Sb_address = kwargs['생산자주소'] 
+            try :   self.P_address = kwargs['생산자주소'] 
             except: print("생산자주소 error")
 
-            try :   self.Sb_brand = kwargs['브랜드'] 
+            try :   self.P_brand = kwargs['브랜드'] 
             except: print("브랜드 error")
             
-            try :   self.Sb_goodsname = kwargs['상품이름'] 
+            try :   self.P_goodsname = kwargs['상품이름'] 
             except: print("상품이름 error")
 
-            try :   self.Sb_kind = kwargs['재배품종'] 
+            try :   self.P_kind = kwargs['재배품종'] 
             except: print("재배품종 error")
 
-            try :   self.Sb_CAddress = kwargs['재배지주소'] 
+            try :   self.P_CAddress = kwargs['재배지주소'] 
             except: print("재배지주소 error")
 
-            try :   self.Sb_culture = kwargs['재배작형'] 
+            try :   self.P_culture = kwargs['재배작형'] 
             except: print("재배작형 error")
             
-            try :   self.Sb_harvesting = kwargs['수확날짜'] 
+            try :   self.P_harvesting = kwargs['수확날짜'] 
             except: print("수확날짜 error")
             
-            try :   self.Sb_shipment = kwargs['출하날짜'] 
+            try :   self.P_shipment = kwargs['출하날짜'] 
             except: print("출하날짜 error")
             
-            try :   self.Sb_weight = kwargs['무게'] 
+            try :   self.P_weight = kwargs['무게'] 
             except: print("무게 error")
             
-            try :   self.Sb_rating = kwargs['등급'] 
+            try :   self.P_rating = kwargs['등급'] 
             except: print("등급 error")
             
-            try :   self.Sb_sc = kwargs['당도'] 
+            try :   self.P_sc = kwargs['당도'] 
             except: print("당도 error")
             
-            try :   self.Sb_htn = kwargs['이력추적관리번호'] 
+            try :   self.P_htn = kwargs['이력추적관리번호'] 
             except: print("이력추적관리번호 error")
+            
+            try :   self.P_CRNumber = kwargs['사업자등록번호'] 
+            except: print("사업자등록번호 error")
 
-            try :   self.Sb_pesticide = kwargs['농약제품명'] 
+            try :   self.P_pesticide = kwargs['농약제품명'] 
             except: print("농약제품명 error")
             
-            try :   self.Sb_pusage = kwargs['농약용도'] 
+            try :   self.P_pusage = kwargs['농약용도'] 
             except: print("농약용도 error")
             
-            try :   self.Sb_pshape = kwargs['농약형태'] 
+            try :   self.To_pshape = kwargs['농약형태'] 
             except: print("농약형태 error")
 
             self.T_hash = hash256(str(self.toDict())).getHash()
@@ -206,23 +213,24 @@ class transaction:
             'sign'      : self.sign,
             'produce'   : self.produce,
 
-            'Sb_name' : self.Sb_name,
-            'Sb_phone' : self.Sb_phone,
-            'Sb_address' : self.Sb_address,
-            'Sb_brand' : self.Sb_brand,
-            'Sb_goodsname' : self.Sb_goodsname,
-            'Sb_kind' : self.Sb_kind,
-            'Sb_CAddress' : self.Sb_CAddress,
-            'Sb_culture' : self.Sb_culture,
-            'Sb_harvesting' : self.Sb_harvesting,
-            'Sb_shipment' : self.Sb_shipment,
-            'Sb_weight' : self.Sb_weight,
-            'Sb_rating' : self.Sb_rating,
-            'Sb_sc' : self.Sb_sc,
-            'Sb_htn' : self.Sb_htn,
-            'Sb_pesticide' : self.Sb_pesticide,
-            'Sb_pusage' : self.Sb_pusage,
-            'Sb_pshape' : self.Sb_pshape
+            'P_name' : self.P_name,
+            'P_phone' : self.P_phone,
+            'P_address' : self.P_address,
+            'P_brand' : self.P_brand,
+            'P_goodsname' : self.P_goodsname,
+            'P_kind' : self.P_kind,
+            'P_CAddress' : self.P_CAddress,
+            'P_culture' : self.P_culture,
+            'P_harvesting' : self.P_harvesting,
+            'P_shipment' : self.P_shipment,
+            'P_weight' : self.P_weight,
+            'P_rating' : self.P_rating,
+            'P_sc' : self.P_sc,
+            'P_htn' : self.P_htn,
+            'P_CRNumber' : self.P_CRNumber,
+            'P_pesticide' : self.P_pesticide,
+            'P_pusage' : self.P_pusage,
+            'P_pshape' : self.P_pshape
             }
         return Dict
 

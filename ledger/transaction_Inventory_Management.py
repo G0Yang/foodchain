@@ -4,7 +4,7 @@ sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 
 from hash256.hash256 import *
 
-class transaction:
+class transaction_Inventory_Management:
     def __init__(self, *args, **kwargs):
         #-- 고정 트랜잭션 항목 --
         # 제안서 부분
@@ -23,7 +23,7 @@ class transaction:
 
         # -- 재고관리 트랜잭션 항목 --
         self.IM_groupname = "" # 단체이름
-
+        self.IM_CRNumber = "" # 사업자등록번호
         self.IM_managername = "" # 담당자이름
         self.IM_managerphone = "" # 담당자전화번호
 
@@ -50,6 +50,9 @@ class transaction:
 
             try :   self.IM_groupname = kwargs['단체이름']
             except: print("단체이름 error")
+            
+            try :   self.IM_CRNumber = kwargs['사업자등록번호']
+            except: print("사업자등록번호 error")
 
             try :   self.IM_managername = kwargs['담당자이름']
             except: print("담당자이름 error")
@@ -97,6 +100,9 @@ class transaction:
 
             try :   self.IM_groupname = kwargs['단체이름']
             except: print("단체이름 error")
+            
+            try :   self.IM_CRNumber = kwargs['사업자등록번호']
+            except: print("사업자등록번호 error")
 
             try :   self.IM_managername = kwargs['담당자이름']
             except: print("담당자이름 error")
@@ -149,6 +155,7 @@ class transaction:
             'produce'   : self.produce,
 
             'IM_groupname' : self.IM_groupname,
+            'IM_CRNumber' : slef.IM_CRNumber,
             'IM_managername' : self.IM_managername,
             'IM_managerphone' : self.IM_managerphone,
             'IM_wn' : self.IM_wn,

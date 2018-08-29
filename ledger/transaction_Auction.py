@@ -9,7 +9,7 @@ sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 
 from hash256.hash256 import *
 
-class transaction:
+class transaction_Auction:
     def __init__(self, *args, **kwargs):
         #-- 고정 트랜잭션 항목 --
         # 제안서 부분
@@ -30,6 +30,7 @@ class transaction:
         self.A_goodsname = "" # 상품 이름
         self.A_grade = "" # 상품 등급
         self.A_groupname = "" # 단체 이름
+        self.A_CRNumber = "" # 사업자등록번호
         self.A_managername = "" # 담당자 이름
         self.A_managerphone = "" # 담장자 전화
         self.A_date = "" # 경매날짜
@@ -54,6 +55,9 @@ class transaction:
 
             try :   self.A_groupname = kwargs['단체이름'] 
             except: print("단체 이름 error")
+            
+            try :   self.A_CRNumber = kwargs['사업자등록번호'] 
+            except: print("사업자등록번호 error")
 
             try :   self.A_managername = kwargs['담당자이름'] 
             except: print("담당자 이름 error")
@@ -92,6 +96,9 @@ class transaction:
 
             try :   self.A_groupname = kwargs['단체이름'] 
             except: print("단체 이름 error")
+            
+            try :   self.A_CRNumber = kwargs['사업자등록번호'] 
+            except: print("사업자등록번호 error")
 
             try :   self.A_managername = kwargs['담당자이름'] 
             except: print("담당자 이름 error")
@@ -132,6 +139,7 @@ class transaction:
             'P_grade' : self.P_grade,
 
             'A_groupname' : self.A_groupname,
+            'A_CRNumber' : self.A_CRNumber,
             'A_managername' : self.A_managername,
             'A_managerphone' : self.A_managerphone,
             'A_date' : self.A_date,

@@ -52,7 +52,7 @@ class mspManage:
 
             elif num == '3':
                 mPhone = input("검색할 핸드폰번호 입력(exit:x) : ")
-                if kName == 'x':
+                if mPhone == 'x':
                     break
                 else:
                     memberCreate.deleteMember('userPhone',mPhone)
@@ -75,7 +75,7 @@ class mspManage:
                 print("0. 종료")
                 print("=====================")
             elif num == '0':
-                sys.exit()
+                break
 
             else:
                 print("  ")
@@ -92,7 +92,6 @@ class mspManage:
     
 if __name__ == "__main__":
     r = mspManage()
-    while True:
-        r.run()
+    r.run()
     #t = createMember()
     #t.findDocument("userIPv4",ID="a6")

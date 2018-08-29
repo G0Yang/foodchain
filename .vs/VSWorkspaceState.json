@@ -7,8 +7,10 @@
     "\\encryption",
     "\\ledger",
     "\\msp",
-    "\\msp\\msp_Client"
+    "\\msp\\msp_Client",
+    "\\msp\\msp_Server",
+    "\\Stakeholder"
   ],
-  "SelectedNode": "\\chaincode\\server_Json.py",
+  "SelectedNode": "\\test.py",
   "PreviewInSolutionExplorer": false
 }

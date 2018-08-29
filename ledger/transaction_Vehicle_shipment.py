@@ -5,7 +5,7 @@ sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 
 from hash256.hash256 import *
 
-class transaction:
+class transaction_Vehicle_shipment:
     def __init__(self, *args, **kwargs):
         #-- 고정 트랜잭션 항목 --
         # 제안서 부분
@@ -24,6 +24,7 @@ class transaction:
 
         # -- 차량 출고 트랜잭션 항목 --
         self.vs_groupname = "" # 단체이름
+        slef.vs_CRNumber = "" # 사업자등록번호
         self.vs_managername = "" # 담당자이름
         self.vs_managerphone = "" # 담당자전화번호
         self.vs_date = "" # 출고날짜
@@ -51,6 +52,9 @@ class transaction:
             try :   self.vs_groupname = kwargs['단체이름']
             except: print("단체이름 error")
             
+            try :   self.vs_CRNumber = kwargs['사업자등록번호']
+            except: print("사업자등록번호 error")
+            
             try :   self.vs_managername = kwargs['담당자이름']
             except: print("담당자이름 error")
             
@@ -60,10 +64,10 @@ class transaction:
             try :   self.vs_date = kwargs['출고날짜']
             except: print("출고날짜 error")
             
-            try :   self.vs_destinationName = kwargs['출하지이름']
+            try :   self.vs_destinationName = kwargs['출고단체이름']
             except: print("출하지이름 error")
             
-            try :   self.vs_destinationAddress = kwargs['출하지주소']
+            try :   self.vs_destinationAddress = kwargs['출고단체주소']
             except: print("출하지주소 error")
 
             try :   self.vs_goodsname = kwargs['상품이름']
@@ -108,6 +112,9 @@ class transaction:
             try :   self.vs_groupname = kwargs['단체이름']
             except: print("단체이름 error")
             
+            try :   self.vs_CRNumber = kwargs['사업자등록번호']
+            except: print("사업자등록번호 error")
+            
             try :   self.vs_managername = kwargs['담당자이름']
             except: print("담당자이름 error")
             
@@ -117,10 +124,10 @@ class transaction:
             try :   self.vs_date = kwargs['출고날짜']
             except: print("출고날짜 error")
             
-            try :   self.vs_destinationName = kwargs['출하지이름']
+            try :   self.vs_destinationName = kwargs['출고단체이름']
             except: print("출하지이름 error")
             
-            try :   self.vs_destinationAddress = kwargs['출하지주소']
+            try :   self.vs_destinationAddress = kwargs['출도단체주소']
             except: print("출하지주소 error")
 
             try :   self.vs_goodsname = kwargs['상품이름']
@@ -169,6 +176,7 @@ class transaction:
             'produce'   : self.produce,
 
             'vs_groupname' : self.vs_groupname,
+            'vs_CRNumber' : slef.vs_CRNumber,
             'vs_managername' : self.vs_managername,
             'vs_managerphone' : self.vs_managerphone,
             'vs_date' : self.vs_date,

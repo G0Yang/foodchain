@@ -16,14 +16,24 @@ class block:
         self.BB = []
         try: 
             tx = args[0]
-            if str(type(tx)) == "<class 'ledger.transaction.transaction'>":
-                self.BB.append(tx)
-                self.BH.setCurrentHash(hash256(str(tx.toDict())).getHash())
-                self.transactionCount = self.transactionCount + 1
-                self.BB[0].txCount = self.transactionCount
-                sizeof = str(self.toDict())
-                self.blocksize = len(sizeof)
-                self.blockID=randFileName()[0:-5]
+            list_tx = ["<class 'ledger.transaction.transaction'>",
+                       "<class 'ledger.transaction_Producer.transaction_Producer'>",
+                       "<class 'ledger.transaction_Vehicle_wearing.transaction_Vehicle_wearing'>",
+                       "<class 'ledger.transaction_Vehicle_shipment.transaction_Vehicle_shipment'>",
+                       "<class 'ledger.transaction_Inventory_Management.transaction_Inventory_Management'>",
+                       "<class 'ledger.transaction_Auction.transaction_Auction'>",
+                       "<class 'ledger.transaction_Seller.transaction_Seller'>"]
+
+            for i in list_tx:
+                if str(type(tx)) == i:
+                    self.BB.append(tx)
+                    self.BH.setCurrentHash(hash256(str(tx.toDict())).getHash())
+                    self.transactionCount = self.transactionCount + 1
+                    self.BB[0].txCount = self.transactionCount
+                    sizeof = str(self.toDict())
+                    self.blocksize = len(sizeof)
+                    self.blockID=randFileName()[0:-5]
+            
         except:
             print("init Error")
         return
@@ -123,4 +133,3 @@ if __name__ == "__main__":
     print()
     print(b1.toDict())
     print("---------------------------------------------------")
-

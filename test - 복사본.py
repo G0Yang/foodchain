@@ -16,14 +16,16 @@ global ip
 import socketserver, os, pathlib, sys, socket
 from os.path import exists
 
+sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
+
 from ledger.block import block
-#from ledger.transaction import *
-from ledger.transaction_Producer import transaction_Producer
-from ledger.transaction_Vehicle_wearing import transaction_Vehicle_wearing
-from ledger.transaction_Vehicle_shipment import transaction_Vehicle_shipment
-from ledger.transaction_Inventory_Management import transaction_Inventory_Management
-from ledger.transaction_Auction import transaction_Auction
-from ledger.transaction_Seller import transaction_Seller
+from ledger.transaction import transaction
+from ledger.transaction_Producer import *
+from ledger.transaction_Vehicle_wearing import *
+from ledger.transaction_Vehicle_shipment import *
+from ledger.transaction_Inventory_Management import *
+from ledger.transaction_Auction import *
+from ledger.transaction_Seller import *
 
 from chaincode.transactionToJson import *
 from chaincode.server_Json import *
@@ -33,15 +35,15 @@ from chaincode.leader_rand import *
 from chaincode.chainToJson import *
 
 from msp.msp_Client.request_client import mspRequest, ipv4Request
+from encryption.tr_sk_encrypt import *
 
-from encryption.tr_sk_encrypt import en
+#from uuid import getnode
 
-from uuid import getnode
 
 # 1. run server
 def socket_server():
     try :
-        HOST = "localhost"
+        HOST = "202.31.146.57"
         PORT =  9009
         runServer(Host = HOST, Port  = PORT)
     except:
@@ -49,10 +51,9 @@ def socket_server():
     return False
 
 # 2. make tx
-
 def makeTransaction(tmp):
     print("make transaction")
-    
+
     tx = None
     
     if tmp == 'Producer':
@@ -189,7 +190,7 @@ def makeTransaction(tmp):
 
     else : print("done!!")
 
-    #print(tx.toDict())
+    print(tx.toDict())
     return tx
 
 
@@ -215,7 +216,7 @@ def block_dispersion(Host,Port,filename):
     path = os.path.dirname(__file__) + "\data_server\\"
     filename = path + filename
 
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+    with socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
         sock.settimeout(5)
         sock.connect((Host,Port))
 
@@ -255,27 +256,22 @@ def chain_append():
         ctj = chainToJson(filename = filename, data = Chain)
         ctj.saveJson()
     print(Chain.toDict())
-    
+
 # 11. 암호화
 def encrypt(Block):
-    try :
-        block_encrypt = en()
-        sk_key = block_encrypt.create_key()
-        block_encrypt.tr_ec(sk_key, "block_" + Block.blockID + ".json")
-        block_encrypt.sk_ec(sk_key, "202.31.146.57")
-    except Exception as e:
-        print(e)
-    else :
-        return True
+    block_encrypt = en()
+    sk_key = block_encrypt.create_key()
+    block_encrypt.tr_ec(sk_key, "block_" + Block.blockID + ".json")
     return False
+
 
 if __name__ == "__main__":
     filename = ""
     result = 0
-    tx=None
+    tx = None
     Block = None
-    
-
+    en_data = None
+    tmp = None
     while True:
         print("login")
         
@@ -308,32 +304,28 @@ if __name__ == "__main__":
         elif num == 2:
             print("2. make tx")
             tx = makeTransaction(tmp)
-
-
         
         elif num == 3:
             print("3. make BLock")
             Block = make_block(tx)
 
         elif num == 4:
-            encrypt(Block)
+            en_data = encrypt(Block)
             
         elif num == 5:
-            print("5. Block dispersion")
-            filename = "block_" + Block.blockID
-            #ip = ["202.31.146.57", "202.31.146.58", "202.31.147.203", "202.31.146.48"]
+            print("4. Block dispersion")
+            filename = "block_" + Block.blockID + "_skec.pem"
+            #block_dispersion(Host = "202.31.146.57", Port= 9011, filename=filename)
+            #ip = ["202.31.146.57"]
             ip = ipv4Request()
             num, ip = ip.ipv4Request("02")
-            print(ip)
             for i in ip:
                 try:
-                    block_dispersion(Host = i,Port= 9009,filename=filename)
+                    block_dispersion(Host = i,Port= 9009, filename=filename)
                 except Exception as e:
                     print(e)
-
-
             filename="ch_1.json"
-            ctj = chainToJson(filename = filename)
+            ctj = chainToJson(filename=filename)
             if not exists(path + filename):
                 Chain = chain(CHID = chid, block = Block)
                 Chain.append(Block)
@@ -352,3 +344,8 @@ if __name__ == "__main__":
             
         elif num==0:
             break
+
+        print()
+        print()
+        print()
+        print()

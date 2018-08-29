@@ -4,7 +4,7 @@ sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 
 from hash256.hash256 import *
 
-class transaction:
+class transaction_Vehicle_wearing:
     def __init__(self, *args, **kwargs):
         #-- 고정 트랜잭션 항목 --
         # 제안서 부분
@@ -23,6 +23,7 @@ class transaction:
 
         # -- 차량 입고 트랜잭션 항목 --
         self.vw_gropsname = "" # 단체이름
+        self.vw_CRNumber = "" # 사업자등록번호
         self.vw_managername = "" # 담당자이름
         self.vw_managerphone = "" # 담당자전화번호
         self.vw_date = "" # 입고날짜
@@ -49,6 +50,9 @@ class transaction:
             
             try :   self.vw_gropsname = kwargs['단체이름']
             except: print("단체이름 error")
+               
+            try :   self.vw_CRNumber = kwargs['사업자등록번호']
+            except: print("사업자등록번호 error")
             
             try :   self.vw_managername = kwargs['담당자이름']
             except: print("담당자이름 error")
@@ -59,10 +63,10 @@ class transaction:
             try :   self.vw_date = kwargs['입고날짜']
             except: print("입고날짜 error")
             
-            try :   self.vw_origiName = kwargs['입고한생산자(단체)이름']
+            try :   self.vw_origiName = kwargs['입고단체이름']
             except: print("서명 error")
             
-            try :   self.vw_originAddress = kwargs['입고한생산자(단체)주소']
+            try :   self.vw_originAddress = kwargs['입고단체주소']
             except: print("서명 error")
 
             try :   self.vw_goodsname = kwargs['상품이름']
@@ -105,6 +109,9 @@ class transaction:
             
             try :   self.vw_gropsname = kwargs['단체이름']
             except: print("단체이름 error")
+               
+            try :   self.vw_CRNumber = kwargs['사업자등록번호']
+            except: print("사업자등록번호 error")
             
             try :   self.vw_managername = kwargs['담당자이름']
             except: print("담당자이름 error")
@@ -166,6 +173,7 @@ class transaction:
             'produce'   : self.produce,
 
             'vw_gropsname' : self.vw_gropsname,
+            'vw_vw_gropsname' : self.vw_gropsname,
             'vw_managername' : self.vw_managername,
             'vw_managerphone' : self.vw_managerphone,
             'vw_date' : self.vw_date,
