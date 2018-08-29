@@ -23,7 +23,9 @@ from chaincode.blockToJson import blockToJson
 from chaincode.randFileName import *
 from chaincode.leader_rand import *
 
-from msp.msp_Client.request_client import *
+from msp.msp_Client.request_client import mspRequest, ipv4Request
+
+from encryption.tr_sk_encrypt import en
 
 from uuid import getnode
 from ledger.transaction import *
@@ -123,25 +125,40 @@ def chain_append():
         ctj = chainToJson(filename = filename, data = Chain)
         ctj.saveJson()
     print(Chain.toDict())
+    
+# 11. 암호화
+def encrypt(Block):
+    try :
+        block_encrypt = en()
+        sk_key = block_encrypt.create_key()
+        block_encrypt.tr_ec(sk_key, "block_" + Block.blockID + ".json")
+        block_encrypt.sk_ec(sk_key, "202.31.146.57")
+    except Exception as e:
+        print(e)
+    else :
+        return True
+    return False
 
 if __name__ == "__main__":
     filename = ""
     result = 0
     tx=None
+    Block = None
+    
 
-    while True:
-        print("login")
-        
-        ID = input("ID : ")
-        PW = input("PW : ")
-
-        msp = mspRequest()
-        tmp = msp.verificationRequest(ID, PW)
-
-        print(tmp, type(tmp))
-
-        if tmp == "True":
-            break
+    #while True:
+    #    print("login")
+    #    
+    #    ID = input("ID : ")
+    #    PW = input("PW : ")
+    #
+    #    msp = mspRequest()
+    #    tmp = msp.verificationRequest(ID, PW)
+    #
+    #    print(tmp, type(tmp))
+    #
+    #    if tmp == "True":
+    #        break
 
     while True:
         
@@ -149,7 +166,8 @@ if __name__ == "__main__":
         print("1. run server")
         print("2. make tx")
         print("3. make block")
-        print("4. Block dispersion")
+        print("4. block encryption")
+        print("5. Block dispersion")
         print("0. 종료")
     
         num = int(input('select : '))
@@ -165,32 +183,38 @@ if __name__ == "__main__":
         
         elif num == 3:
             print("3. make BLock")
-            BLock = make_block(tx)
-            
+            Block = make_block(tx)
+
         elif num == 4:
-            print("4. Block dispersion")
-            filename = "block_" + BLock.blockID + ".json"
-            ip = ipv4Request()
-            num, ip = ip.ipv4Request("01")
+            encrypt(Block)
+            
+        elif num == 5:
+            print("5. Block dispersion")
+            filename = "block_" + Block.blockID
+            ip = ["202.31.146.57"]
+            #ip = ipv4Request()
+            #num, ip = ip.ipv4Request("01")
             for i in ip:
                 try:
                     block_dispersion(Host = i,Port= 9009,filename=filename)
                 except Exception as e:
-                    pass
-            filename="ch_1.json"
-            ctj = chainToJson(filename=filename)
-            if not exists(path + filename):
-                Chain = chain(CHID = chid, block = BLock)
-                Chain.append(BLock)
-                ctj = chainToJson(filename = filename, data = Chain)
-                ctj.saveJson()
-            else:
-                ctj = chainToJson(filename = filename)
-                ctj.data = ctj.loadJson()
-                Chain = chain()
-                Chain.fromDict(Dict = ctj.data)
-                Chain.append(BLock)
-                ctj = chainToJson(filename = filename, data = Chain)
-                ctj.saveJson()
-            print(Chain.toDict())
+                    print(e)
+
+
+            #filename="ch_1.json"
+            #ctj = chainToJson(filename=filename)
+            #if not exists(path + filename):
+            #    Chain = chain(CHID = chid, block = Block)
+            #    Chain.append(Block)
+            #    ctj = chainToJson(filename = filename, data = Chain)
+            #    ctj.saveJson()
+            #else:
+            #    ctj = chainToJson(filename = filename)
+            #    ctj.data = ctj.loadJson()
+            #    Chain = chain()
+            #    Chain.fromDict(Dict = ctj.data)
+            #    Chain.append(Block)
+            #    ctj = chainToJson(filename = filename, data = Chain)
+            #    ctj.saveJson()
+            #print(Chain.toDict())
             

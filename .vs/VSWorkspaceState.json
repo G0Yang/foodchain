@@ -2,14 +2,13 @@
   "ExpandedNodes": [
     "",
     "\\chaincode",
+    "\\data_client",
     "\\data_server",
     "\\encryption",
-    "\\encryption\\privateKey",
-    "\\encryption\\publicKey",
     "\\ledger",
     "\\msp",
-    "\\msp\\msp_Member"
+    "\\msp\\msp_Client"
   ],
-  "SelectedNode": "\\chaincode\\blockToJson.py",
+  "SelectedNode": "\\chaincode\\server_Json.py",
   "PreviewInSolutionExplorer": false
 }

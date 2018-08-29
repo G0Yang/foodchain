@@ -1,33 +1,45 @@
 # This Python file uses the following encoding: utf-8
 import socketserver, os, pathlib, sys, socket
 from os.path import exists
+from uuid import getnode
+
+sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 
 from ledger.block import block
-from ledger import transaction
+from ledger.transaction import transaction
+
 from chaincode.transactionToJson import *
 from chaincode.server_Json import *
 from chaincode.blockToJson import blockToJson
 from chaincode.randFileName import *
 from chaincode.leader_rand import *
-
-from uuid import getnode
-from ledger.transaction import *
 from chaincode.chainToJson import *
-from os.path import exists
+
+from encryption.tr_sk_decrypt import dc
 
 HOST = ''
 PORT = 9009
- 
- 
+
 path_server = os.path.dirname(os.path.abspath(os.path.dirname(__file__))) + "\data_server\\"
 file_list= os.listdir(path_server)
+
 class MyTcpHandler(socketserver.BaseRequestHandler):
     def handle(self):
-        data_transferred = 0
         print('[%s] 연결됨' %self.client_address[0])
-        data = {}
-        data = self.request.recv(1024) # 클라이언트로 부터 파일이름을 전달받음
-        
+        data = self.request.recv(1024) 
+
+        filename = randFileName()
+        with open(path_server +filename, 'wb') as f:
+            try:
+                f.write(data)
+            except Exception as e:
+                print(e)
+
+        de = dc()
+        de.sk_dc(filename)
+
+
+
         if  str(data).split('"')[1] == "TXID":
             filename = str(data).split('"')[3]
             filename = "tx_" + filename + ".json"
