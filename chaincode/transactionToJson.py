@@ -2,7 +2,7 @@
 import json, pathlib, sys, os
 
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
-from ledger.transaction import *
+#from ledger.transaction import *
 from chaincode.randFileName import *
 
 path = os.path.dirname(os.path.abspath(os.path.dirname(__file__))) + "\data_server\\"

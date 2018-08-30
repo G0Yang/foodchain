@@ -9,8 +9,8 @@
     "\\msp",
     "\\msp\\msp_Client",
     "\\msp\\msp_Server",
-    "\\Stakeholder"
+    "\\synchronize"
   ],
-  "SelectedNode": "\\test.py",
+  "SelectedNode": "\\ledger\\transaction_Vehicle_wearing.py",
   "PreviewInSolutionExplorer": false
 }

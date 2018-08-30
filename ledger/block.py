@@ -2,7 +2,14 @@
 import time, sys, os
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 
-from ledger.transaction import transaction
+#from ledger.transaction import transaction
+from ledger.transaction_Producer import transaction_Producer
+from ledger.transaction_Vehicle_wearing import transaction_Vehicle_wearing
+from ledger.transaction_Vehicle_shipment import transaction_Vehicle_shipment
+from ledger.transaction_Inventory_Management import transaction_Inventory_Management
+from ledger.transaction_Auction import transaction_Auction
+from ledger.transaction_Seller import transaction_Seller
+
 from ledger.blockheader import *
 from hash256.hash256 import *
 from chaincode.randFileName import *
@@ -35,7 +42,7 @@ class block:
                     self.blockID=randFileName()[0:-5]
             
         except:
-            print("init Error")
+            print("block_init Error")
         return
         
     def append(self, Object):
@@ -102,9 +109,36 @@ class block:
 
             try:
                 for i in Dict['blockbody']:
-                    tx = transaction()
-                    tx.fromDict(Dict = i)
-                    self.BB.append(tx)
+                    if i['TXType'] == "Producer":
+                        tx = transaction_Producer()
+                        tx.fromDict(Dict = i)
+                        self.BB.append(tx)
+
+                    elif i['TXType'] == "Auctioneer":
+                        tx = transaction_Auction()
+                        tx.fromDict(Dict = i)
+                        self.BB.append(tx)
+
+                    elif i['TXType'] == "WManager":
+                        tx = transaction_Inventory_Management()
+                        tx.fromDict(Dict = i)
+                        self.BB.append(tx)
+
+                    elif i['TXType'] == "Distributor_1":
+                        tx = transaction_Vehicle_wearing()
+                        tx.fromDict(Dict = i)
+                        self.BB.append(tx)
+
+                    elif i['TXType'] == "Distributor_2":
+                        tx = transaction_Vehicle_shipment()
+                        tx.fromDict(Dict = i)
+                        self.BB.append(tx)
+
+                    elif i['TXType'] == "Seller":
+                        tx = transaction_Seller()
+                        tx.fromDict(Dict = i)
+                        self.BB.append(tx)
+
             except: print("blockbody error")
 
         except:

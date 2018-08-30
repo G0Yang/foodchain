@@ -12,7 +12,7 @@ class transaction_Vehicle_wearing:
         self.timestamp = time.time()
         self.verstion = 0.2
         self.creatorID = {} # 트랜잭션 생성자 서명
-        self.TXType = "" # 트랜잭션 분류
+        self.TXType = "Distributor_1" # 트랜잭션 분류
         self.timeout = 0
         self.T_hash = "" # 현재 트랜잭션 해시
 
@@ -188,6 +188,84 @@ class transaction_Vehicle_wearing:
             'vw_vop' : self.vw_vop
             }
         return Dict
+
+
+    def fromDict(self, Dict):
+        if type(Dict) is not type(dict()):
+            print("false")
+            return False
+        try:
+            try : self.TXID = Dict['TXID']
+            except: print()
+            try : self.timestamp = Dict['timestamp']
+            except: print()
+            try : self.verstion = Dict['verstion']
+            except: print()
+            try : self.creatorID = Dict['creatorID']
+            except: print()
+            try : self.TXType = Dict['TXType']
+            except: print()
+            try : self.timeout = Dict['timeout']
+            except: print()
+            try : self.T_hash = Dict['T_hash']
+            except: print()
+            try : self.txCount = Dict['txCount']
+            except: print()
+
+            try : self.endorsers = Dict['endorsers']
+            except: print()
+            try : self.sign = Dict['sign']
+            except: print()
+            try : self.produce = Dict['produce']
+            except: print()
+
+            try :   self.vw_groupname = Dict['vw_groupname']
+            except: print()
+
+            try :   self.vw_CRNumber = Dict['vw_CRNumber']
+            except: print()
+
+            try :   self.vw_managername = Dict['vw_managername']
+            except: print()
+
+            try :   self.vw_managerphone = Dict['vw_managerphone']
+            except: print()
+            
+            try :   self.vw_date = Dict['vw_date']
+            except: print()
+
+            try :   self.vw_destinationName = Dict['vw_destinationName']
+            except: print()
+
+            try :   self.vw_destinationAddress = Dict['vw_destinationAddress']
+            except: print()
+
+            try :   self.vw_goodsname = Dict['vw_goodsname']
+            except: print()
+            
+            try :   self.vw_quantity = Dict['vw_quantity']
+            except: print()
+            
+            try :   self.vw_weight = Dict['vw_weight']
+            except: print()
+            
+            try :   self.vw_temperature = Dict['vw_temperature']
+            except: print()
+            
+            try :   self.vw_vn = Dict['vw_vn']
+            except: print()
+            
+            try :   self.vw_vo = Dict['vw_vo']
+            except: print()
+            
+            try :   self.vw_vop = Dict['vw_vop']
+            except: print()
+            
+        except:
+            return False
+        else:
+            return True
+        return False
 
 if __name__ == "__main__":
     t1 = transaction(상품이름='딸기', 검증={'IP':'202.31.146.57'}) # 초기 생성

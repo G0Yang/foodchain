@@ -15,7 +15,7 @@ from chaincode.randFileName import *
 from chaincode.leader_rand import *
 from chaincode.chainToJson import *
 
-from encryption.tr_sk_decrypt import dc
+
 
 HOST = ''
 PORT = 9009
@@ -27,17 +27,45 @@ class MyTcpHandler(socketserver.BaseRequestHandler):
     def handle(self):
         print('[%s] 연결됨' %self.client_address[0])
         data = self.request.recv(1024) 
+        okdata = data.decode()
+        data = data.decode()
+        
 
-        filename = randFileName()
-        with open(path_server +filename, 'wb') as f:
-            try:
-                f.write(data)
-            except Exception as e:
-                print(e)
+        if "ok?" in okdata:
+            self.request.send("ok!".encode())
+            return 
 
-        de = dc()
-        de.sk_dc(filename)
 
+        print(okdata, type(okdata))
+        print(data, type(data))
+        
+        tmp = str(data).split('B23C000F')
+        chainName = tmp[0]
+        data = tmp [1]
+        
+        print()
+        print()
+        print()
+        print()
+
+        print(chainName, type(chainName))
+        print(data, type(data))
+        data = data.encode()
+        print()
+        print()
+        print()
+        print()
+
+
+        #filename = randFileName()
+        #with open(path_server +filename, 'wb') as f:
+        #    try:
+        #        f.write(data)
+        #    except Exception as e:
+        #        print(e)
+        #
+        #de = dc()
+        #de.sk_dc(filename)
 
 
         if  str(data).split('"')[1] == "TXID":
@@ -58,6 +86,14 @@ class MyTcpHandler(socketserver.BaseRequestHandler):
         else:
             filename = str(data).split('"')[3]
             filename = "block_" + filename + ".json"
+
+            
+            print()
+            print()
+            print()
+            print()
+            print()
+
             if filename is not None:
                 with open(path_server + filename, 'wb') as f:
                     try:
@@ -68,7 +104,7 @@ class MyTcpHandler(socketserver.BaseRequestHandler):
             btj.data = btj.loadJson()
             Block = block()
             Block.fromDict(Dict = btj.data)
-            filename = "ch_1.json"
+            filename = str(chainName)
             if not exists(path + filename):
                 Chain = chain(CHID = randFileName(), block = Block)
                 Chain.append(Block)
@@ -90,6 +126,7 @@ def runServer(Host = HOST, Port  = PORT):
     print('++++++파일 서버를 시작++++++')
     print("+++파일 서버를 끝내려면 'Ctrl + C'를 누르세요.")
     print(type(Host), type(Port))
+    print(Host, Port)
     try:
         server = socketserver.TCPServer((Host,Port),MyTcpHandler)
         server.serve_forever()

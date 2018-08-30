@@ -17,7 +17,7 @@ class transaction_Auction:
         self.timestamp = time.time()
         self.verstion = 0.2
         self.creatorID = {} # 트랜잭션 생성자 서명
-        self.TXType = "" # 트랜잭션 분류
+        self.TXType = "Auctioneer" # 트랜잭션 분류
         self.timeout = 0
         self.T_hash = "" # 현재 트랜잭션 해시
 
@@ -135,9 +135,6 @@ class transaction_Auction:
             'sign'      : self.sign,
             'produce'   : self.produce,
 
-            'P_name' : self.P_name,
-            'P_grade' : self.P_grade,
-
             'A_groupname' : self.A_groupname,
             'A_CRNumber' : self.A_CRNumber,
             'A_managername' : self.A_managername,
@@ -146,6 +143,65 @@ class transaction_Auction:
             'A_price' : self.A_price
             }
         return Dict
+
+    def fromDict(self, Dict):
+        if type(Dict) is not type(dict()):
+            print("false")
+            return False
+        try:
+            try : self.TXID = Dict['TXID']
+            except: print()
+            try : self.timestamp = Dict['timestamp']
+            except: print()
+            try : self.verstion = Dict['verstion']
+            except: print()
+            try : self.creatorID = Dict['creatorID']
+            except: print()
+            try : self.TXType = Dict['TXType']
+            except: print()
+            try : self.timeout = Dict['timeout']
+            except: print()
+            try : self.T_hash = Dict['T_hash']
+            except: print()
+            try : self.txCount = Dict['txCount']
+            except: print()
+
+            try : self.endorsers = Dict['endorsers']
+            except: print()
+            try : self.sign = Dict['sign']
+            except: print()
+            try : self.produce = Dict['produce']
+            except: print()
+
+            try :   self.A_goodsname = Dict['A_goodsname']
+            except: print()
+
+            try :   self.A_grade = Dict['A_grade']
+            except: print()
+
+            try :   self.A_groupname = Dict['A_groupname']
+            except: print()
+
+            try :   self.A_CRNumber = Dict['A_CRNumber']
+            except: print()
+            
+            try :   self.A_managername = Dict['A_managername']
+            except: print()
+
+            try :   self.A_managerphone = Dict['A_managerphone']
+            except: print()
+
+            try :   self.A_date = Dict['A_date']
+            except: print()
+
+            try :   self.A_price = Dict['A_price']
+            except: print()
+            
+        except:
+            return False
+        else:
+            return True
+        return False
 
 if __name__ == "__main__":
     t1 = transaction(상품이름='딸기', 검증={'IP':'202.31.146.57'}) # 초기 생성

@@ -2,7 +2,7 @@
 import time, sys, os, random
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 
-from ledger.transaction import *
+#from ledger.transaction import *
 from ledger.block import block
 from hash256.hash256 import *
 from chaincode.randFileName import *

@@ -260,11 +260,11 @@ if __name__ == "__main__":
         except Exception as e:
             print(e)
 
-        if permmision is not None:
-            break
         else:
             print("Login False!!")
-
+            
+        if permmision is not None:
+            break
 
 
     while True:

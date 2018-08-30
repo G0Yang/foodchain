@@ -15,7 +15,7 @@ class transaction_Producer:
         self.timestamp = time.time()
         self.verstion = 0.2
         self.creatorID = {} # 트랜잭션 생성자 서명
-        self.TXType = "" # 트랜잭션 분류
+        self.TXType = "Producer" # 트랜잭션 분류
         self.timeout = 0
         self.T_hash = "" # 현재 트랜잭션 해시
 
@@ -109,7 +109,7 @@ class transaction_Producer:
             try :   self.P_pusage = kwargs['농약용도'] 
             except: print("농약용도 error")
             
-            try :   self.To_pshape = kwargs['농약형태'] 
+            try :   self.P_pshape = kwargs['농약형태'] 
             except: print("농약형태 error")
 
             self.T_hash = hash256(str(self.toDict())).getHash()
@@ -183,7 +183,7 @@ class transaction_Producer:
             try :   self.P_pusage = kwargs['농약용도'] 
             except: print("농약용도 error")
             
-            try :   self.To_pshape = kwargs['농약형태'] 
+            try :   self.P_pshape = kwargs['농약형태'] 
             except: print("농약형태 error")
 
             self.T_hash = hash256(str(self.toDict())).getHash()
@@ -234,6 +234,94 @@ class transaction_Producer:
             }
         return Dict
 
+    def fromDict(self, Dict):
+        if type(Dict) is not type(dict()):
+            print("false")
+            return False
+        try:
+            try : self.TXID = Dict['TXID']
+            except: print()
+            try : self.timestamp = Dict['timestamp']
+            except: print()
+            try : self.verstion = Dict['verstion']
+            except: print()
+            try : self.creatorID = Dict['creatorID']
+            except: print()
+            try : self.TXType = Dict['TXType']
+            except: print()
+            try : self.timeout = Dict['timeout']
+            except: print()
+            try : self.T_hash = Dict['T_hash']
+            except: print()
+            try : self.txCount = Dict['txCount']
+            except: print()
+
+            try : self.endorsers = Dict['endorsers']
+            except: print()
+            try : self.sign = Dict['sign']
+            except: print()
+            try : self.produce = Dict['produce']
+            except: print()
+
+            try :   self.P_name = Dict['P_name']
+            except: print()
+
+            try :   self.P_phone = Dict['P_phone']
+            except: print()
+
+            try :   self.P_address = Dict['P_address']
+            except: print()
+
+            try :   self.P_brand = Dict['P_brand']
+            except: print()
+            
+            try :   self.P_goodsname = Dict['P_goodsname']
+            except: print()
+
+            try :   self.P_kind = Dict['P_kind']
+            except: print()
+
+            try :   self.P_CAddress = Dict['P_CAddress']
+            except: print()
+
+            try :   self.P_culture = Dict['P_culture']
+            except: print()
+            
+            try :   self.P_harvesting = Dict['P_harvesting']
+            except: print()
+            
+            try :   self.P_shipment = Dict['P_shipment']
+            except: print()
+            
+            try :   self.P_weight = Dict['P_weight']
+            except: print()
+            
+            try :   self.P_rating = Dict['P_rating']
+            except: print()
+            
+            try :   self.P_sc = Dict['P_sc']
+            except: print()
+            
+            try :   self.P_htn = Dict['P_htn']
+            except: print()
+            
+            try :   self.P_CRNumber = Dict['P_CRNumber']
+            except: print()
+
+            try :   self.P_pesticide = Dict['P_pesticide']
+            except: print()
+            
+            try :   self.P_pusage = Dict['P_pusage']
+            except: print()
+            
+            try :   self.P_pshape = Dict['P_pshape']
+            except: print()
+
+        except:
+            return False
+        else:
+            return True
+        return False
 
 #if __name__ == "__main__":
 #    t1 = transaction(상품이름='딸기', 검증={'IP':'202.31.146.57'}) # 초기 생성

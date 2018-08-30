@@ -1,23 +1,15 @@
+# This Python file uses the following encoding: utf-8
+
 # 기영 202.31.146.57
 # 기도 202.31.147.203
 # 신재 202.31.146.48
 # 상훈 202.31.146.58
 # PORT 9009
 
-# 가정
-# 1. 기존 장부는 있다. (Chain은 이미 있다.)
-# 2. 기존 장부에 트랜잭션을 발생시켜 블록화를 하고 채인에 추가함
-# 3. 채인에 추가할 때 FlagDB까지 갱신을 시켜야 한다.
-# 4. 트랜잭션은 이미 만들어진 data_server\tx_52qp2i55919387.json 을 기본으로 한다.
-# 5. 기존 장부는 data_server\ch_8srkziel366214.json 을 기본으로 한다.
-# 6. 마지막 10. chain append는 모든 노드가 최대한 비슷한 시간에 동시에 수행되어야 한다.
-# 7. 결론적으로 tx_52qp2i55919387.json 의 내용이 합의를 통해서 ch_8srkziel366214.json 에 추가되어야 한다.
 global ip 
 import socketserver, os, pathlib, sys, socket
 from os.path import exists
 
-from ledger.block import block
-#from ledger.transaction import *
 from ledger.transaction_Producer import transaction_Producer
 from ledger.transaction_Vehicle_wearing import transaction_Vehicle_wearing
 from ledger.transaction_Vehicle_shipment import transaction_Vehicle_shipment
@@ -27,21 +19,27 @@ from ledger.transaction_Seller import transaction_Seller
 
 from chaincode.transactionToJson import *
 from chaincode.server_Json import *
-from chaincode.blockToJson import blockToJson
+from chaincode.blockToJson import *
 from chaincode.randFileName import *
 from chaincode.leader_rand import *
 from chaincode.chainToJson import *
 
 from msp.msp_Client.request_client import mspRequest, ipv4Request
 
-from encryption.tr_sk_encrypt import en
-
 from uuid import getnode
+
+
+def get_ipaddress():
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s.connect(("gmail.com",80))
+    r = s.getsockname()[0]
+    s.close()
+    return str(r)
 
 # 1. run server
 def socket_server():
     try :
-        HOST = "localhost"
+        HOST = get_ipaddress()
         PORT =  9009
         runServer(Host = HOST, Port  = PORT)
     except:
@@ -211,7 +209,7 @@ def make_block(tx):
     return Block
 
 # 9. block dispersion
-def block_dispersion(Host,Port,filename):
+def block_dispersion(Host, Port, filename, interrestCode):
     path = os.path.dirname(__file__) + "\data_server\\"
     filename = path + filename
 
@@ -226,11 +224,14 @@ def block_dispersion(Host,Port,filename):
         with open(filename, 'rb') as f:
             try:
                 data = f.read()
-                sock.sendall(data)
+                Block = block()
+
+                tmp = str(interrestCode) + "B23C000F" + str(data.decode())
+                sock.sendall(tmp.encode())
                 print(data)
             except Exception as e:
                 print(e)
-                
+
 # 10. chain append
 def chain_append():
     path = os.path.dirname(__file__) + "\data_server\\"
@@ -256,25 +257,116 @@ def chain_append():
         ctj.saveJson()
     print(Chain.toDict())
     
-# 11. 암호화
-def encrypt(Block):
-    try :
-        block_encrypt = en()
-        sk_key = block_encrypt.create_key()
-        block_encrypt.tr_ec(sk_key, "block_" + Block.blockID + ".json")
-        block_encrypt.sk_ec(sk_key, "202.31.146.57")
-    except Exception as e:
-        print(e)
-    else :
-        return True
-    return False
+
+# 12. 합의 통신
+def confurmBlock(ip):
+    okList = []
+    print(ip)
+    for i in ip:
+        try:
+            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+                print(i, type(i))
+                
+                sock.settimeout(5)
+                sock.connect((i,9009))
+                sock.sendall("ok?".encode())
+
+                data = sock.recv(1024)
+                data = data.decode()
+
+                print(data, type(data))
+
+                if data == "ok!":
+                    okList.append(True)
+                else:
+                    okList.append(False)
+
+        except Exception as e:
+            okList.append(False)
+            print(e)
+
+    return okList
+
+
+
+def main(chainName, interrestCode):
+    while True:
+        
+        print("---------------- socket - blockchain test ----------------")
+        print("1. run server")
+        print("2. make tx")
+        print("3. confurm")
+        print("4. make block")
+        print("5. Block dispersion")
+        print("0. 종료")
+    
+        num = int(input('select : '))
+        if num == 1:
+            print("1. run server")
+            socket_server()
+    
+        elif num == 2:
+            print("2. make tx")
+            tx = makeTransaction(tmp)
+
+        elif num == 3:
+            ip = ipv4Request()
+            num, ip = ip.ipv4Request("02")
+            okList = confurmBlock(ip)
+            print(okList)
+
+        
+        elif num == 4:
+            if False in okList:
+                continue
+            print("4. make BLock")
+            Block = make_block(tx)
+
+        elif num == 5:
+            if False in okList:
+                continue
+            print("5. Block dispersion")
+            filename = "block_" + Block.blockID + ".json"
+            #ip = ["202.31.146.57", "202.31.146.58", "202.31.147.203", "202.31.146.48"]
+            ip = ipv4Request()
+            num, ip = ip.ipv4Request(interrestCode)
+            print(ip)
+            for i in ip:
+                try:
+                    block_dispersion(Host = i, Port = 9009, filename = filename, interrestCode = chainName)
+                except Exception as e:
+                    print(e)
+
+
+            #filename=chainName
+            #ctj = chainToJson(filename = filename)
+            #if not exists(path + filename):
+            #    Chain = chain(CHID = chid, block = Block)
+            #    Chain.append(Block)
+            #    ctj = chainToJson(filename = filename, data = Chain)
+            #    ctj.saveJson()
+            #else:
+            #    ctj = chainToJson(filename = filename)
+            #    ctj.data = ctj.loadJson()
+            #    Chain = chain()
+            #    Chain.fromDict(Dict = ctj.data)
+            #    Chain.append(Block)
+            #    ctj = chainToJson(filename = filename, data = Chain)
+            #    ctj.saveJson()
+            #print(Chain.toDict())
+            
+            
+        elif num==0:
+            break
+
+
 
 if __name__ == "__main__":
     filename = ""
     result = 0
     tx=None
     Block = None
-    
+    okList = []
 
     while True:
         print("login")
@@ -289,66 +381,7 @@ if __name__ == "__main__":
     
         if tmp == "Auctioneer" or tmp == "Distributor" or tmp == "Producer" or tmp == "Seller" or tmp == "WManager" :
             break
-
-    while True:
         
-        print("---------------- socket - blockchain test ----------------")
-        print("1. run server")
-        print("2. make tx")
-        print("3. make block")
-        print("4. block encryption")
-        print("5. Block dispersion")
-        print("0. 종료")
-    
-        num = int(input('select : '))
-        if num == 1:
-            print("1. run server")
-            socket_server()
-    
-        elif num == 2:
-            print("2. make tx")
-            tx = makeTransaction(tmp)
-
-
-        
-        elif num == 3:
-            print("3. make BLock")
-            Block = make_block(tx)
-
-        elif num == 4:
-            encrypt(Block)
-            
-        elif num == 5:
-            print("5. Block dispersion")
-            filename = "block_" + Block.blockID
-            #ip = ["202.31.146.57", "202.31.146.58", "202.31.147.203", "202.31.146.48"]
-            ip = ipv4Request()
-            num, ip = ip.ipv4Request("02")
-            print(ip)
-            for i in ip:
-                try:
-                    block_dispersion(Host = i,Port= 9009,filename=filename)
-                except Exception as e:
-                    print(e)
-
-
-            filename="ch_1.json"
-            ctj = chainToJson(filename = filename)
-            if not exists(path + filename):
-                Chain = chain(CHID = chid, block = Block)
-                Chain.append(Block)
-                ctj = chainToJson(filename = filename, data = Chain)
-                ctj.saveJson()
-            else:
-                ctj = chainToJson(filename = filename)
-                ctj.data = ctj.loadJson()
-                Chain = chain()
-                Chain.fromDict(Dict = ctj.data)
-                Chain.append(Block)
-                ctj = chainToJson(filename = filename, data = Chain)
-                ctj.saveJson()
-            print(Chain.toDict())
-            
-            
-        elif num==0:
-            break
+    main("ch_1.json", "02")
+    main("ch_2.json", "03")
+    main("ch_3.json", "04")
