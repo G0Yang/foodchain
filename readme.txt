@@ -149,3 +149,10 @@
 -> transaction_???.py 로 만들어진 각 파일들을 선택적으로 불러와 제작할 수 있음.
 3. 각 파일들 모듈화 재 작업.
 -> block의 toDict() 함수에서 transaction을 파일별로 만들어 넣어야 하는 문재 발생.
+
+2019.01.09 패치노트
+1. 전자 봉투 삽입 signing.py, binding.py
+2. 개별 프로잭트로 인식 모든 소스는 참조 혹은 자체 개발로 진행
+3. 불필요한 파일, 폴더 삭제
+4. toJson.py 파일 삭제
+-> ledger interface에 삽입.

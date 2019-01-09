@@ -2,16 +2,9 @@
 import time, sys, os
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 
-#from ledger.transaction import transaction
-from ledger.transaction_Producer import transaction_Producer
-from ledger.transaction_Vehicle_wearing import transaction_Vehicle_wearing
-from ledger.transaction_Vehicle_shipment import transaction_Vehicle_shipment
-from ledger.transaction_Inventory_Management import transaction_Inventory_Management
-from ledger.transaction_Auction import transaction_Auction
-from ledger.transaction_Seller import transaction_Seller
+from ledger.transaction import transaction, libhash
 
 from ledger.blockheader import *
-from hash256.hash256 import *
 from chaincode.randFileName import *
 
 class block:
@@ -21,25 +14,22 @@ class block:
         self.blockID=""
         self.BH = blockheader()
         self.BB = []
+        if "blockID" in kwargs:
+            self.blockID = kwargs['blockID']
+            self.fromJson()
         try: 
-            tx = args[0]
-            list_tx = ["<class 'ledger.transaction.transaction'>",
-                       "<class 'ledger.transaction_Producer.transaction_Producer'>",
-                       "<class 'ledger.transaction_Vehicle_wearing.transaction_Vehicle_wearing'>",
-                       "<class 'ledger.transaction_Vehicle_shipment.transaction_Vehicle_shipment'>",
-                       "<class 'ledger.transaction_Inventory_Management.transaction_Inventory_Management'>",
-                       "<class 'ledger.transaction_Auction.transaction_Auction'>",
-                       "<class 'ledger.transaction_Seller.transaction_Seller'>"]
+            tx = None
+            if args:
+                tx = args[0]
 
-            for i in list_tx:
-                if str(type(tx)) == i:
-                    self.BB.append(tx)
-                    self.BH.setCurrentHash(hash256(str(tx.toDict())).getHash())
-                    self.transactionCount = self.transactionCount + 1
-                    self.BB[0].txCount = self.transactionCount
-                    sizeof = str(self.toDict())
-                    self.blocksize = len(sizeof)
-                    self.blockID=randFileName()[0:-5]
+            if str(type(tx)) == "<class 'ledger.transaction.transaction'>":
+                self.BB.append(tx)
+                self.BH.setCurrentHash(libhash(str(tx.toDict())).getsha256())
+                self.transactionCount = self.transactionCount + 1
+                self.BB[0].txCount = self.transactionCount
+                sizeof = str(self.toDict())
+                self.blocksize = len(sizeof)
+                self.blockID = randFileName()[0:-5]
             
         except:
             print("block_init Error")
@@ -52,11 +42,11 @@ class block:
                 self.transactionCount = self.transactionCount + 1
                 self.BB[-1].txCount = self.transactionCount
                 self.blocksize = len(str(self.toDict()))
-                self.BH.setCurrentHash(hash256(str(self.toDict())).getHash())
+                self.BH.setCurrentHash(libhash(str(Object.toDict())).getsha256())
             else:
                 return False
-        except:
-            print("append Error")
+        except Exception as e:
+            print(e)
             return False
 
         return True
@@ -66,7 +56,7 @@ class block:
         try:
             for i in self.BB:
                 string = string + i.getHash()
-            self.BH.currentBlockHash = hash256(string).getHash()
+            self.BH.currentBlockHash = libhash(str(i.toDict())).getsha256()
         except:
             return False
         else:
@@ -93,19 +83,18 @@ class block:
 
     def fromDict(self, Dict):
         try:
-            try: self.blockID = Dict['blockID']
-            except: print("blockID error")
-            try : self.transactionCount = Dict['transactionCount']
-            except: print("transactionCount error")
-
-            try : self.blocksize = Dict['blocksize']
-            except: print("blocksize error")
+            if 'blockID' in Dict:
+                self.blockID = Dict['blockID']
+            if 'transactionCount' in Dict:
+                self.transactionCount = Dict['transactionCount']
+            if 'blocksize' in Dict:
+                self.blocksize = Dict['blocksize']
 
             try : 
                 bh =  blockheader()
                 bh.fromDict(Dict = Dict['blockheader'])
                 self.BH = bh
-            except: print("blockheader error")
+            except: print("blockheader error") 
 
             try:
                 for i in Dict['blockbody']:
@@ -141,6 +130,29 @@ class block:
 
             except: print("blockbody error")
 
+        except:
+            return False
+        else:
+            return True
+        return False
+    
+    def toJson(self):
+        try:
+            save = json.dumps(self.toDict())
+            file = pathlib.Path(self.blockID)
+            file.write_text(save, encoding='utf-8')
+        except:
+            return False
+        else:
+            return True
+        return False
+
+    def fromJson(self):
+        Data = None
+        try:
+            file = pathlib.Path(self.blockID)
+            file_text = file.read_text(encoding='utf-8')
+            Data = json.loads(file_text)
         except:
             return False
         else:

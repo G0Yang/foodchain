@@ -3,7 +3,8 @@ import time, sys, os
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 
 import metadata
-from hash256.hash256 import *
+from DIgitalEnvelope.lib.libhash import libhash
+from chaincode.randFileName import *
 
 class transaction:
     def __init__(self, *args, **kwargs):
@@ -11,7 +12,7 @@ class transaction:
         self.flag = {}
 
         # 제안서 부분
-        self.TXID = ""
+        self.TXID = randFileName().split('.')[0]
         self.timestamp = time.time()
         self.verstion = metadata.metadata["BaseVersion"]
         self.creatorID = {} # 트랜잭션 생성자 서명
@@ -42,42 +43,40 @@ class transaction:
         self.N_else = "" # 비고
         
         try:
-            # self.endorsers[str(len(self.endorsers))] = kwargs['검증']
-            # self.N_state = kwargs['타입']
-            try :   self.N_state = kwargs['타입'] 
-            except: print("타입 error")
-            
-            try :   self.M_name = kwargs['생산자'] 
-            except: print("생산자 error")
+            if '타입' in kwargs:
+                self.N_state = kwargs['타입'] 
 
-            try :   self.M_phone = kwargs['전화번호'] 
-            except: print("전화번호 error")
+            if '생산자' in kwargs:
+                self.M_name = kwargs['생산자'] 
 
-            try :   self.endorsers[str(len(self.endorsers))] = kwargs['검증'] 
-            except: print("검증 error")
-            
-            try :   self.P_name = kwargs['이름'] 
-            except: print("이름 error")
+            if '전화번호' in kwargs:
+                self.M_phone = kwargs['전화번호'] 
 
-            try :   self.P_From = kwargs['산지'] 
-            except: print("산지 error")
+            if '검증' in kwargs:
+                self.endorsers[str(len(self.endorsers))] = kwargs['검증'] 
 
-            try :   self.P_grade = kwargs['등급'] 
-            except: print("등급 error")
+            if '이름' in kwargs:
+                self.P_name = kwargs['이름'] 
 
-            try :   self.P_wight = kwargs['무게'] 
-            except: print("무게 error")
+            if '산지' in kwargs:
+                self.P_From = kwargs['산지'] 
+                
+            if '등급' in kwargs:
+                self.P_grade = kwargs['등급'] 
 
-            try :   self.sign[str(len(self.sign))] = kwargs['사인'] 
-            except: print("사인 error")
-            
-            try :   self.creatorID = kwargs['서명']
-            except: print("서명 error")
+            if '무게' in kwargs:
+                self.P_wight = kwargs['무게'] 
 
-            self.T_hash = hash256(str(self.toDict())).getHash()
+            if '사인' in kwargs:
+                self.sign[str(len(self.sign))] = kwargs['사인'] 
 
-        except:
-            print("error")
+            if '서명' in kwargs:
+                self.creatorID = kwargs['서명'] 
+
+            self.T_hash = libhash(str(self.toDict())).getsha256()
+
+        except Exception as e:
+            print(e)
         return 
 
     def getHash(self):
@@ -85,46 +84,42 @@ class transaction:
 
     def setAttribute(self, *args, **kwargs):
         try:
-            # self.endorsers[str(len(self.endorsers))] = kwargs['검증']
-            # self.N_state = kwargs['타입']
-            try :   self.N_state = kwargs['타입'] 
-            except: self.flag['타입'] = False
+            if '타입' in kwargs:
+                self.N_state = kwargs['타입'] 
+
+            if '생산자' in kwargs:
+                self.M_name = kwargs['생산자'] 
+
+            if '전화번호' in kwargs:
+                self.M_phone = kwargs['전화번호'] 
+
+            if '검증' in kwargs:
+                self.endorsers[str(len(self.endorsers))] = kwargs['검증'] 
+
+            if '이름' in kwargs:
+                self.P_name = kwargs['이름'] 
+
+            if '산지' in kwargs:
+                self.P_From = kwargs['산지'] 
+                
+            if '등급' in kwargs:
+                self.P_grade = kwargs['등급'] 
+
+            if '무게' in kwargs:
+                self.P_wight = kwargs['무게'] 
+
+            if '사인' in kwargs:
+                self.sign[str(len(self.sign))] = kwargs['사인'] 
+
+            if '서명' in kwargs:
+                self.creatorID = kwargs['서명'] 
             
-            try :   self.M_name = kwargs['생산자'] 
-            except: self.flag['생산자'] = False
+            self.T_hash = libhash(str(self.toDict())).getsha256()
 
-            try :   self.M_phone = kwargs['전화번호'] 
-            except: self.flag['전화번호'] = False
-
-            try :   self.endorsers[str(len(self.endorsers))] = kwargs['검증'] 
-            except: self.flag['검증'] = False
-            
-            try :   self.P_name = kwargs['이름'] 
-            except: self.flag['이름'] = False
-
-            try :   self.P_From = kwargs['산지'] 
-            except: self.flag['산지'] = False
-
-            try :   self.P_grade = kwargs['등급'] 
-            except: self.flag['등급'] = False
-
-            try :   self.P_wight = kwargs['무게'] 
-            except: self.flag['무게'] = False
-
-            try :   self.sign[str(len(self.sign))] = kwargs['사인'] 
-            except: self.flag['사인'] = False
-            
-            try :   self.creatorID = kwargs['서명']
-            except: self.flag['서명'] = False
-            
-            self.T_hash = hash256(str(self.toDict())).getHash()
-
-        except:
-            print("error")
+        except Exception as e:
+            print(e)
         else:
-            if False in self.flag:
-                for i in self.flag:
-                    print(i, "is error")
+            return False
             return True
 
 
@@ -165,55 +160,103 @@ class transaction:
             print("false")
             return False
         try:
-            try : self.TXID = Dict['TXID']
-            except: print()
-            try : self.timestamp = Dict['timestamp']
-            except: print()
-            try : self.verstion = Dict['verstion']
-            except: print()
-            try : self.creatorID = Dict['creatorID']
-            except: print()
-            try : self.TXType = Dict['TXType']
-            except: print()
-            try : self.timeout = Dict['timeout']
-            except: print()
-            try : self.T_hash = Dict['T_hash']
-            except: print()
-            try : self.txCount = Dict['txCount']
-            except: print()
+            
+            if 'TXID' in Dict:
+                self.TXID = Dict['TXID'] 
 
-            try : self.endorsers = Dict['endorsers']
-            except: print()
-            try : self.sign = Dict['sign']
-            except: print()
-            try : self.produce = Dict['produce']
-            except: print()
+            if 'timestamp' in Dict:
+                self.timestamp = Dict['timestamp'] 
 
-            try : self.P_name = Dict['P_name']
-            except: print()
-            try : self.P_From = Dict['P_From']
-            except: print()
-            try : self.P_grade = Dict['P_grade']
-            except: print()
-            try : self.P_wight = Dict['P_wight']
-            except: print()
+            if 'verstion' in Dict:
+                self.verstion = Dict['verstion'] 
 
-            try : self.M_name = Dict['M_name']
-            except: print()
-            try : self.M_phone = Dict['M_phone']
-            except: print()
-            try : self.M_com = Dict['M_com']
-            except: print()
+            if 'creatorID' in Dict:
+                self.creatorID = Dict['creatorID'] 
 
-            try : self.N_state = Dict['N_state']
-            except: print()
-            try : self.N_else = Dict['N_else']
-            except: print()
+            if 'TXType' in Dict:
+                self.TXType = Dict['TXType'] 
+
+            if 'timeout' in Dict:
+                self.timeout = Dict['timeout'] 
+                
+            if 'T_hash' in Dict:
+                self.T_hash = Dict['T_hash'] 
+
+            if 'txCount' in Dict:
+                self.txCount = Dict['txCount'] 
+
+
+
+            if 'endorsers' in Dict:
+                self.endorsers = Dict['endorsers'] 
+                
+            if 'sign' in Dict:
+                self.sign = Dict['sign'] 
+
+            if 'produce' in Dict:
+                self.produce = Dict['produce'] 
+
+                
+
+            if 'P_name' in Dict:
+                self.P_name = Dict['P_name'] 
+
+            if 'P_From' in Dict:
+                self.P_From = Dict['P_From'] 
+                
+            if 'P_grade' in Dict:
+                self.P_grade = Dict['P_grade'] 
+
+            if 'P_wight' in Dict:
+                self.P_wight = Dict['P_wight'] 
+
+                
+
+            if 'M_name' in Dict:
+                self.M_name = Dict['M_name'] 
+                
+            if 'M_phone' in Dict:
+                self.M_phone = Dict['M_phone'] 
+
+            if 'M_com' in Dict:
+                self.M_com = Dict['M_com'] 
+
+                
+                
+            if 'N_state' in Dict:
+                self.N_state = Dict['N_state'] 
+
+            if 'N_else' in Dict:
+                self.N_else = Dict['N_else'] 
+        except Exception as e:
+            print(e)
+        else:
+            return True
+        return False
+
+    def toJson(self):
+        try:
+            save = json.dumps(self.toDict())
+            file = pathlib.Path(self.TXID)
+            file.write_text(save, encoding='utf-8')
         except:
             return False
         else:
             return True
+        return
+
+    def fromJson(self):
+        Data = None
+        try:
+            file = pathlib.Path(self.TXID)
+            file_text = file.read_text(encoding='utf-8')
+            Data = json.loads(file_text)
+        except:
+            return False
+        else:
+            return Data
         return False
+
 
 if __name__ == "__main__":
     t1 = transaction(이름='딸기', 검증={'IP':'202.31.146.57'}, 타입="입고") # 초기 생성

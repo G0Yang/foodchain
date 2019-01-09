@@ -7,7 +7,7 @@ def randFileName(num = 1):
         Time = str(time.time())[11:18]
         tf = tempfile.NamedTemporaryFile(suffix=Time)
         List.append(tf)
-        print(tf.name[-15:-1])
+        #print(tf.name[-15:-1])
     if num == 1:
         return tf.name[-15:-1] + ".json"
     else:

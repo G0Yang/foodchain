@@ -2,15 +2,11 @@
   "ExpandedNodes": [
     "",
     "\\chaincode",
-    "\\data_client",
-    "\\data_server",
-    "\\encryption",
+    "\\DIgitalEnvelope",
+    "\\DIgitalEnvelope\\lib",
     "\\ledger",
-    "\\msp",
-    "\\msp\\msp_Client",
-    "\\msp\\msp_Server",
-    "\\synchronize"
+    "\\test_result"
   ],
-  "SelectedNode": "\\ledger\\transaction_Vehicle_wearing.py",
+  "SelectedNode": "\\DIgitalEnvelope\\lib\\libhash.py",
   "PreviewInSolutionExplorer": false
 }

@@ -2,9 +2,9 @@
 import time, sys, os, random
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 
-#from ledger.transaction import *
+from ledger.transaction import transaction
 from ledger.block import block
-from hash256.hash256 import *
+from DIgitalEnvelope.lib.libhash import libhash
 from chaincode.randFileName import *
 
 class chain:
@@ -12,20 +12,23 @@ class chain:
         self.CHID = randFileName().split('.')[0]
         self.chains = []
         self.C_Hash = None
-        print(len(self.chains))
 
         self.FlagID = None
         self.FlagREV = None
 
-        try : self.CHID = kwargs['CHID']
-        except : print("CHID error")
-        try : self.chains = kwargs['chains']
-        except : print("chains error")
-        try : self.C_Hash = kwargs['C_Hash']
-        except : print("C_Hash error")
-        
+        if 'CHID' in kwargs:
+            self.CHID = kwargs['CHID']
+
+        if 'C_Hash' in kwargs:
+            self.C_Hash = kwargs['C_Hash']
+
+        if 'chains' in kwargs:
+            self.chains = kwargs['chains']
+
         try : 
-            b1 = args[0]
+            b1 = None
+            if args:
+                b1 = args[0]
             if str(type(b1)) == "<class 'ledger.block.block'>":
                 b1.BH.blockNumber = 1
                 self.chains.append(b1)
@@ -33,7 +36,6 @@ class chain:
 
         if self.C_Hash is None:
             self.set_Hash()
-        print("end")
         return
         
     def getCHID(self):
@@ -55,8 +57,7 @@ class chain:
 
     def set_Hash(self):
         try:
-
-            self.C_Hash = hash256(str(self.toDict())).getHash()
+            self.C_Hash = libhash(str(self.toDict())).getsha256()
         except:
             return False
         else:
@@ -76,11 +77,11 @@ class chain:
 
     def fromDict(self, Dict):
         try:
-            try : self.CHID = Dict['CHID']
-            except: print()
+            if 'CHID' in Dict:
+                self.CHID = Dict['CHID']
 
-            try : self.C_Hash = Dict['C_Hash']
-            except: print()
+            if 'C_Hash' in Dict:
+                self.C_Hash = Dict['C_Hash']
 
             try:
                 for i in Dict['chains']:
@@ -95,31 +96,54 @@ class chain:
             return True
         return False
         
+    def toJson(self):
+        try:
+            save = json.dumps(self.toDict())
+            file = pathlib.Path(self.CHID)
+            file.write_text(save, encoding='utf-8')
+        except:
+            return False
+        else:
+            return True
+        return False
+
+    def fromJson(self):
+        Data = None
+        try:
+            file = pathlib.Path(self.CHID)
+            file_text = file.read_text(encoding='utf-8')
+            Data = json.loads(file_text)
+        except:
+            return False
+        else:
+            return Data
+        return Data
+
 if __name__ == "__main__":
     t1 = transaction(이름 = "딸기", 타입 = "보냄")
     b1 = block(t1)
     c1 = chain(b1)
     
+    print("--------------------------------")
     print()
+    print("t1", t1.toDict())
     print()
-    print(t1.toDict())
+    print("b1", b1.toDict())
     print()
-    print(b1.toDict())
-    print()
-    print(c1.toDict())
+    print("c1", c1.toDict())
 
     
     t2 = transaction(이름 = "딸기", 타입 = "받음")
     b2 = block(t2)
     c1.append(b2)
     
+    print("--------------------------------")
     print()
+    print("t2", t2.toDict())
     print()
-    print(t2.toDict())
+    print("b2", b2.toDict())
     print()
-    print(b2.toDict())
-    print()
-    print(c1.toDict())
+    print("c2", c1.toDict())
 
     
     t3 = transaction(이름 = "딸기", 타입 = "다시 보냄")
@@ -128,11 +152,11 @@ if __name__ == "__main__":
     b3.append(t4)
     c1.append(b3)
     
+    print("--------------------------------")
     print()
+    print("t3", t3.toDict())
+    print("t4", t4.toDict())
     print()
-    print(t3.toDict())
-    print(t4.toDict())
+    print("b3", b3.toDict())
     print()
-    print(b3.toDict())
-    print()
-    print(c1.toDict())
+    print("c1", c1.toDict())
