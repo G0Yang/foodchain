@@ -99,10 +99,10 @@ B팀은 분산원장, 분산합의, 트랜잭션.
     
   * DIgitalEnvelope				# 전자 봉투 모듈
     * lib						# 암호화 라이브러리
-	- libAES.py					# AES 알고리즘
-	- libDES.py					# DES 알고리즘
-	- libhash.py				# hash 알고리즘 256, 3_512, md5
-	- libRSA.py					# RSA 알고리즘
+	  - libAES.py					# AES 알고리즘
+	  - libDES.py					# DES 알고리즘
+	  - libhash.py				# hash 알고리즘 256, 3_512, md5
+	  - libRSA.py					# RSA 알고리즘
   - binding.py					# 전자 봉투
   - signing.py					# 전자 서명
 
