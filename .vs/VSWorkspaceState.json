@@ -4,9 +4,8 @@
     "\\chaincode",
     "\\DIgitalEnvelope",
     "\\DIgitalEnvelope\\lib",
-    "\\ledger",
-    "\\test_result"
+    "\\ledger"
   ],
-  "SelectedNode": "\\DIgitalEnvelope\\lib\\libhash.py",
+  "SelectedNode": "\\ledger\\transaction.py",
   "PreviewInSolutionExplorer": false
 }

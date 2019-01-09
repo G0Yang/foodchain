@@ -93,27 +93,18 @@ B팀은 분산원장, 분산합의, 트랜잭션.
 ## 파일 구조
 * foodchain
   * chaincode
-    - blockToJson.py            # 합의를 위한 블록 생성
-    - chainToJson.py            # 새로운 장부 만들기, 장부에 내역 추가
-    - client_Json.py
     - randFileName.py           # 각 인터페이스 이름 생성
-    - leader_rand.py            # 트랜잭션 종합을 위해 리더가 생성하는 랜덤 값
-    - socket_Json.py			# Foodchain.py 에 쓰이는 소켓 통신
-    - server_Json.py			# test.py 에 쓰이는 소켓 통신
-    - transactionToJson.py      # 트랜잭션 재안서(.json) 저장
 
-  * client
-    - client.py					# 역활별 기능 제한을 구현할 예정
-	
-  * data_client
-
-  * data_server
+  * data						# 테스트 원장 파일
     
-  * flagdb
-    - kvstore.py                # 하이퍼랫저 패브릭의 Worldstate 기능
-
-  * hash256
-    - hash256.py                # hash256 구현 <- hashlib 참조
+  * DIgitalEnvelope				# 전자 봉투 모듈
+    * lib						# 암호화 라이브러리
+	- libAES.py					# AES 알고리즘
+	- libDES.py					# DES 알고리즘
+	- libhash.py				# hash 알고리즘 256, 3_512, md5
+	- libRSA.py					# RSA 알고리즘
+  - binding.py					# 전자 봉투
+  - signing.py					# 전자 서명
 
   * ledger
     - block.py                  # 블록 인터페이스
@@ -121,19 +112,8 @@ B팀은 분산원장, 분산합의, 트랜잭션.
     - chain.py                  # 체인 인터페이스
     - transaction.py            # 트랜잭션 인터페이스
 
-  * msp
-    - msp.py
-
-  * Stakeholder
-    - Stakeholder.py            # 합의 알고리즘
-
-  * synchronize
-    - synchronize.py            # 기존 원장 무결성 채크
-
   * test_result					# 테스트를 하면서 생기는 로그나 캡쳐등 증빙자료
 
-  - Foodchain.py                # 종합 예제
-  - metadata.py                 # 이 프로쟉트의 metadata
+  - metadata.py                 # 이 프로잭트의 metadata
   - readme.txt                  # 패치노트
-  - test.py						# 9.4일 순천대 발표를 위한 소스
   
